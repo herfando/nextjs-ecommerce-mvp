@@ -1,9 +1,13 @@
-# 🛍️ Next.js E-Commerce MVP
+<h1 align="center">🛍️ Next.js E-Commerce MVP</h1>
 
-![Banner](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2FzM2hxYjU4M2Y0MzZsMGV2bmJrNndjcDJjaGZsY2NzaXdyY3B6ZCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Yl5VGsYVQJPy3gnTjz/giphy.gif)
+<p align="center">
+  <img src="https://media.giphy.com/media/Yl5VGsYVQJPy3gnTjz/giphy.gif" width="600" alt="E-Commerce Banner"/>
+</p>
 
-> 🚀 **Modern E-Commerce MVP** built with **Next.js, Tailwind CSS, and TypeScript**.  
-> Minimal design, fast performance, scalable architecture. ✨
+<p align="center">
+  🚀 <b>Modern E-Commerce MVP</b> built with <b>Next.js, Tailwind CSS, and TypeScript</b>. <br/>
+  Minimal design, fast performance, scalable architecture. ✨
+</p>
 
 ---
 
@@ -19,11 +23,13 @@
 
 ## 🛠️ Tech Stack
 
-![Next.js](https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-20232a?style=for-the-badge&logo=react&logoColor=61dafb)
-![Tailwind](https://img.shields.io/badge/Tailwind_CSS-38b2ac?style=for-the-badge&logo=tailwind-css&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vercel](https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-000?style=for-the-badge&logo=next.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/React-20232a?style=for-the-badge&logo=react&logoColor=61dafb" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38b2ac?style=for-the-badge&logo=tailwind-css&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178c6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
+</p>
 
 ---
 
