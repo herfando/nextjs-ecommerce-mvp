@@ -1,10 +1,6 @@
 <h1 align="center">🛍️ Next.js E-Commerce MVP</h1>
 
 <p align="center">
-  <img src="https://media.githubusercontent.com/media/github/explore/main/topics/nextjs/nextjs.png" width="600" alt="E-Commerce Banner"/>
-</p>
-
-<p align="center">
   🚀 <b>Modern E-Commerce MVP</b> built with <b>Next.js, Tailwind CSS, and TypeScript</b>. <br/>
   Minimal design, fast performance, scalable architecture. ✨
 </p>
