@@ -1,7 +1,7 @@
 <h1 align="center">🛍️ Next.js E-Commerce MVP</h1>
 
 <p align="center">
-  <img src="https://media.giphy.com/media/Yl5VGsYVQJPy3gnTjz/giphy.gif" width="600" alt="E-Commerce Banner"/>
+  <img src="https://media.giphy.com/media/Yl5VGsYVQJPy3gnTz/giphy.gif" width="600" alt="E-Commerce Banner"/>
 </p>
 
 <p align="center">
