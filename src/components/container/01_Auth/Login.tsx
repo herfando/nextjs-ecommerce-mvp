@@ -6,6 +6,8 @@ import { loginSchema, TLoginSchema } from '@/lib/validations/auth';
 import api from '@/lib/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
+import { useAuth } from '@/lib/context/auth_context'; // ✅ pakai Context
+import { useRouter } from 'next/navigation'; // ✅ redirect setelah login
 
 // Shadcn UI
 import { Input } from '@/components/ui/input';
@@ -13,29 +15,40 @@ import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 
 export default function LoginForm() {
+  const router = useRouter();
+  const { login } = useAuth(); // ✅ ambil fungsi login dari Context
+
+  // 🔹 Setup form dengan zodResolver
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
-  // 🔥 Gunakan TanStack useMutation
+  // 🔥 useMutation dari TanStack Query
   const loginMutation = useMutation({
     mutationFn: async (data: TLoginSchema) => {
       const res = await api.post('/auth/login', data);
-      return res.data;
+      return res.data; // diasumsikan API mengembalikan { token, email, ... }
     },
     onSuccess: (data) => {
       toast.success('Login berhasil 🎉');
-      console.log('Token:', data.token);
+
+      // ✅ Simpan ke context (dan bisa juga ke localStorage)
+      login({ email: data.email, token: data.token });
+
+      // ✅ Reset form
       form.reset();
+
+      // ✅ Arahkan ke dashboard (opsional)
+      router.push('/dashboard');
     },
     onError: (error: any) => {
-      const message =
-        error.response?.data?.message || 'Login gagal, coba lagi.';
+      const message = error.response?.data?.message || 'Login gagal, coba lagi.';
       toast.error(message);
       console.error(error);
     },
   });
 
+  // 🔹 Submit handler
   const onSubmit = (data: TLoginSchema) => {
     loginMutation.mutate(data);
   };
@@ -45,6 +58,7 @@ export default function LoginForm() {
       onSubmit={form.handleSubmit(onSubmit)}
       className="flex flex-col gap-4 w-full max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow-md"
     >
+      {/* Email Field */}
       <div>
         <Label htmlFor="email" className="text-sm font-medium text-gray-700">
           Email
@@ -62,6 +76,7 @@ export default function LoginForm() {
         )}
       </div>
 
+      {/* Password Field */}
       <div>
         <Label htmlFor="password" className="text-sm font-medium text-gray-700">
           Password
@@ -79,6 +94,7 @@ export default function LoginForm() {
         )}
       </div>
 
+      {/* Submit Button */}
       <Button
         type="submit"
         disabled={loginMutation.isPending}
