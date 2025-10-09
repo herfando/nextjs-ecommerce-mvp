@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@/lib/context/auth_context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react'; // ✅ Import useState untuk toggle password
+import Image from 'next/image';
 
 // Shadcn UI
 import { Input } from '@/components/ui/input';
@@ -67,8 +68,8 @@ export default function LoginForm() {
         <CardContent className="p-8">
           {/* Logo dan Judul */}
           <div className="flex items-center mb-6">
-            <Sparkles className="h-6 w-6 text-black mr-2 rotate-90" /> {/* Ikon sebagai logo */}
-            <span className="text-xl font-semibold text-black">Shirt</span>
+             <Image src="/Vector.png" alt="Shirt Logo" width={24} height={24}/>
+            <span className="translate-x-2 text-xl font-semibold text-black">Shirt</span>
           </div>
 
           <h1 className="text-2xl font-bold mb-1 text-black">Login</h1>
