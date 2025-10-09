@@ -6,21 +6,29 @@ import { loginSchema, TLoginSchema } from '@/lib/validations/auth';
 import api from '@/lib/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
-import { useAuth } from '@/lib/context/auth_context'; // ✅ pakai Context
-import { useRouter } from 'next/navigation'; // ✅ redirect setelah login
+import { useAuth } from '@/lib/context/auth_context';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react'; // ✅ Import useState untuk toggle password
 
 // Shadcn UI
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card'; // ✅ Card untuk wadah form
+import { Eye, EyeOff, Sparkles } from 'lucide-react'; // ✅ Ikon untuk logo dan password
 
 export default function LoginForm() {
   const router = useRouter();
-  const { login } = useAuth(); // ✅ ambil fungsi login dari Context
+  const { login } = useAuth();
+  const [showPassword, setShowPassword] = useState(false); // ✅ State untuk toggle password
 
   // 🔹 Setup form dengan zodResolver
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
+    defaultValues: {
+        email: '',
+        password: '',
+    }
   });
 
   // 🔥 useMutation dari TanStack Query
@@ -54,54 +62,91 @@ export default function LoginForm() {
   };
 
   return (
-    <form
-      onSubmit={form.handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow-md"
-    >
-      {/* Email Field */}
-      <div>
-        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
-          Email
-        </Label>
-        <Input
-          type="email"
-          id="email"
-          placeholder="you@example.com"
-          {...form.register('email')}
-        />
-        {form.formState.errors.email && (
-          <p className="text-red-500 text-xs mt-1">
-            {form.formState.errors.email.message}
-          </p>
-        )}
-      </div>
+    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
+      <Card className="w-full max-w-sm rounded-xl shadow-lg border-none bg-white">
+        <CardContent className="p-8">
+          {/* Logo dan Judul */}
+          <div className="flex items-center mb-6">
+            <Sparkles className="h-6 w-6 text-black mr-2 rotate-90" /> {/* Ikon sebagai logo */}
+            <span className="text-xl font-semibold text-black">Shirt</span>
+          </div>
 
-      {/* Password Field */}
-      <div>
-        <Label htmlFor="password" className="text-sm font-medium text-gray-700">
-          Password
-        </Label>
-        <Input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          {...form.register('password')}
-        />
-        {form.formState.errors.password && (
-          <p className="text-red-500 text-xs mt-1">
-            {form.formState.errors.password.message}
+          <h1 className="text-2xl font-bold mb-1 text-black">Login</h1>
+          <p className="text-sm text-gray-500 mb-6">
+            Access your account and start shopping in seconds
           </p>
-        )}
-      </div>
 
-      {/* Submit Button */}
-      <Button
-        type="submit"
-        disabled={loginMutation.isPending}
-        className="w-full"
-      >
-        {loginMutation.isPending ? 'Loading...' : 'Login'}
-      </Button>
-    </form>
+          {/* Form */}
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            {/* Email Field - Dibuat simple tanpa Label di atas Input */}
+            <div>
+              <Input
+                type="email"
+                id="email"
+                placeholder="Email" // Placeholder sebagai pengganti Label
+                className="h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm focus-visible:ring-offset-0 focus-visible:ring-black"
+                {...form.register('email')}
+              />
+              {form.formState.errors.email && (
+                <p className="text-red-500 text-xs mt-1">
+                  {form.formState.errors.email.message}
+                </p>
+              )}
+            </div>
+
+            {/* Password Field - Dengan ikon toggle mata di dalam Input */}
+            <div className="relative">
+              <Input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                placeholder="Password" // Placeholder sebagai pengganti Label
+                className="h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm pr-10 focus-visible:ring-offset-0 focus-visible:ring-black" // Tambahkan padding kanan
+                {...form.register('password')}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
+              </button>
+              {form.formState.errors.password && (
+                <p className="text-red-500 text-xs mt-1">
+                  {form.formState.errors.password.message}
+                </p>
+              )}
+            </div>
+
+            {/* Submit Button - Warna Hitam, full width, rounded sedikit */}
+            <Button
+              type="submit"
+              disabled={loginMutation.isPending}
+              className="w-full mt-2 h-11 bg-black text-white hover:bg-gray-800 rounded-lg text-base font-medium"
+            >
+              {loginMutation.isPending ? 'Loading...' : 'Login'}
+            </Button>
+          </form>
+
+          {/* Teks "Don't have an account?" */}
+          <div className="mt-6 text-center text-sm text-gray-500">
+            Don't have an account?{' '}
+            <button
+              onClick={() => router.push('/register')} // Gantilah dengan path yang benar
+              className="font-semibold text-black hover:text-gray-800"
+            >
+              Register
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
