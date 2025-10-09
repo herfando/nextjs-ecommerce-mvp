@@ -8,45 +8,46 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useAuth } from '@/lib/context/auth_context';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react'; // ✅ Import useState untuk toggle password
+import { useState } from 'react';
+import Image from 'next/image';
 
 // Shadcn UI
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card'; // ✅ Card untuk wadah form
-import { Eye, EyeOff, Sparkles } from 'lucide-react'; // ✅ Ikon untuk logo dan password
+import { Card, CardContent } from '@/components/ui/card';
+import { Eye, EyeOff } from 'lucide-react'; 
+// Sparkles tidak perlu diimport karena sudah diganti Image
+import RegisterForm from './Register';
+
+const LOGO_PATH = '/Vector.png';
+const LOGO_SIZE = 24;
 
 export default function LoginForm() {
   const router = useRouter();
   const { login } = useAuth();
-  const [showPassword, setShowPassword] = useState(false); // ✅ State untuk toggle password
+  const [showPassword, setShowPassword] = useState(false);
 
   // 🔹 Setup form dengan zodResolver
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-        email: '',
-        password: '',
-    }
+      email: '',
+      password: '',
+    },
   });
 
-  // 🔥 useMutation dari TanStack Query
+  // 🔥 useMutation dari TanStack Query (tetap sama)
   const loginMutation = useMutation({
     mutationFn: async (data: TLoginSchema) => {
       const res = await api.post('/auth/login', data);
-      return res.data; // diasumsikan API mengembalikan { token, email, ... }
+      return res.data;
     },
+
     onSuccess: (data) => {
       toast.success('Login berhasil 🎉');
-
-      // ✅ Simpan ke context (dan bisa juga ke localStorage)
       login({ email: data.email, token: data.token });
-
-      // ✅ Reset form
       form.reset();
-
-      // ✅ Arahkan ke dashboard (opsional)
       router.push('/dashboard');
     },
     onError: (error: any) => {
@@ -65,9 +66,16 @@ export default function LoginForm() {
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <Card className="w-full max-w-sm rounded-xl shadow-lg border-none bg-white">
         <CardContent className="p-8">
+          
           {/* Logo dan Judul */}
           <div className="flex items-center mb-6">
-            <Sparkles className="h-6 w-6 text-black mr-2 rotate-90" /> {/* Ikon sebagai logo */}
+            <Image 
+              src={LOGO_PATH} 
+              alt="Shirt Logo" 
+              width={LOGO_SIZE} 
+              height={LOGO_SIZE} 
+              className="mr-2" // ✅ Gunakan mr-2 untuk jarak antar logo dan teks
+            />
             <span className="text-xl font-semibold text-black">Shirt</span>
           </div>
 
@@ -81,12 +89,12 @@ export default function LoginForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-4"
           >
-            {/* Email Field - Dibuat simple tanpa Label di atas Input */}
+            {/* Email Field */}
             <div>
               <Input
                 type="email"
                 id="email"
-                placeholder="Email" // Placeholder sebagai pengganti Label
+                placeholder="Email"
                 className="h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm focus-visible:ring-offset-0 focus-visible:ring-black"
                 {...form.register('email')}
               />
@@ -97,13 +105,13 @@ export default function LoginForm() {
               )}
             </div>
 
-            {/* Password Field - Dengan ikon toggle mata di dalam Input */}
+            {/* Password Field */}
             <div className="relative">
               <Input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                placeholder="Password" // Placeholder sebagai pengganti Label
-                className="h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm pr-10 focus-visible:ring-offset-0 focus-visible:ring-black" // Tambahkan padding kanan
+                placeholder="Password"
+                className="h-11 px-3 py-2 border border-gray-300 rounded-lg text-sm pr-10 focus-visible:ring-offset-0 focus-visible:ring-black"
                 {...form.register('password')}
               />
               <button
@@ -125,7 +133,7 @@ export default function LoginForm() {
               )}
             </div>
 
-            {/* Submit Button - Warna Hitam, full width, rounded sedikit */}
+            {/* Submit Button */}
             <Button
               type="submit"
               disabled={loginMutation.isPending}
@@ -139,7 +147,7 @@ export default function LoginForm() {
           <div className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{' '}
             <button
-              onClick={() => router.push('/register')} // Gantilah dengan path yang benar
+              onClick={() => router.push('/auth/register')} // ✅ Navigasi ke halaman Register
               className="font-semibold text-black hover:text-gray-800"
             >
               Register
