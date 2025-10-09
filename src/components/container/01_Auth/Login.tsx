@@ -1,67 +1,107 @@
-// src/components/LoginForm.tsx
 'use client';
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { loginSchema, TLoginSchema } from '@/lib/validations/auth';
 import api from '@/lib/api/apiClient';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'sonner';
+import { useAuth } from '@/lib/context/auth_context'; // ✅ pakai Context
+import { useRouter } from 'next/navigation'; // ✅ redirect setelah login
+
+// Shadcn UI
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Button } from '@/components/ui/button';
 
 export default function LoginForm() {
-  const [serverError, setServerError] = useState<string | null>(null);
+  const router = useRouter();
+  const { login } = useAuth(); // ✅ ambil fungsi login dari Context
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-    reset,
-  } = useForm<TLoginSchema>({
+  // 🔹 Setup form dengan zodResolver
+  const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = async (data: TLoginSchema) => {
-    setServerError(null);
-    try {
-      const response = await api.post('/auth/login', data);
-      alert(`Login Berhasil! Token: ${response.data.token}`);
-      reset(); // Kosongkan form setelah sukses
-    } catch (error: any) {
-      // Tangani error yang dikirim dari API route kita
+  // 🔥 useMutation dari TanStack Query
+  const loginMutation = useMutation({
+    mutationFn: async (data: TLoginSchema) => {
+      const res = await api.post('/auth/login', data);
+      return res.data; // diasumsikan API mengembalikan { token, email, ... }
+    },
+    onSuccess: (data) => {
+      toast.success('Login berhasil 🎉');
+
+      // ✅ Simpan ke context (dan bisa juga ke localStorage)
+      login({ email: data.email, token: data.token });
+
+      // ✅ Reset form
+      form.reset();
+
+      // ✅ Arahkan ke dashboard (opsional)
+      router.push('/dashboard');
+    },
+    onError: (error: any) => {
       const message = error.response?.data?.message || 'Login gagal, coba lagi.';
-      setServerError(message);
+      toast.error(message);
       console.error(error);
-    }
+    },
+  });
+
+  // 🔹 Submit handler
+  const onSubmit = (data: TLoginSchema) => {
+    loginMutation.mutate(data);
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-full max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow-md">
-      {serverError && <p className="text-red-500 text-sm text-center bg-red-100 p-2 rounded">{serverError}</p>}
-
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 w-full max-w-sm mx-auto mt-10 p-6 border rounded-lg shadow-md"
+    >
+      {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-        <input
-          {...register('email')}
+        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+          Email
+        </Label>
+        <Input
           type="email"
           id="email"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="you@example.com"
+          {...form.register('email')}
         />
-        {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+        {form.formState.errors.email && (
+          <p className="text-red-500 text-xs mt-1">
+            {form.formState.errors.email.message}
+          </p>
+        )}
       </div>
 
+      {/* Password Field */}
       <div>
-        <label htmlFor="password"  className="block text-sm font-medium text-gray-700">Password</label>
-        <input
-          {...register('password')}
+        <Label htmlFor="password" className="text-sm font-medium text-gray-700">
+          Password
+        </Label>
+        <Input
           type="password"
           id="password"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          placeholder="••••••••"
+          {...form.register('password')}
         />
-        {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+        {form.formState.errors.password && (
+          <p className="text-red-500 text-xs mt-1">
+            {form.formState.errors.password.message}
+          </p>
+        )}
       </div>
 
-      <button type="submit" disabled={isSubmitting} className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-400">
-        {isSubmitting ? 'Loading...' : 'Login'}
-      </button>
+      {/* Submit Button */}
+      <Button
+        type="submit"
+        disabled={loginMutation.isPending}
+        className="w-full"
+      >
+        {loginMutation.isPending ? 'Loading...' : 'Login'}
+      </Button>
     </form>
   );
 }
