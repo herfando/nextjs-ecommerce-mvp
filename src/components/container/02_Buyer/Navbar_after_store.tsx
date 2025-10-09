@@ -71,7 +71,7 @@ const NavAuthSection = () => {
 };
 
 
-export default function Navbar() {
+export default function NavbarAfterStore() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
