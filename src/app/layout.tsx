@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import QueryProvider from "@/lib/providers/query-provider";
+import QueryProvider from "@/lib/providers/query_provider";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/context/auth_context";
 
@@ -30,12 +30,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
-          <QueryProvider>
+        <QueryProvider> {/* ✅ Query di luar */}
+          <AuthProvider> {/* ✅ Auth di dalam */}
             {children}
             <Toaster richColors position="top-right" />
-          </QueryProvider>
-        </AuthProvider>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );

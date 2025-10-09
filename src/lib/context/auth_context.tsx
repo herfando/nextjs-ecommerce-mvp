@@ -4,22 +4,34 @@ import { createContext, useContext, useState, ReactNode, useEffect } from "react
 type User = {
   email: string;
   token: string;
+  // Anda mungkin juga memiliki properti 'name'
 };
 
 type AuthContextType = {
   user: User | null;
   login: (user: User) => void;
   logout: () => void;
+  isLoading: boolean; // ✅ TAMBAH: Status loading untuk Hydration
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true); // ✅ TAMBAH: State loading
 
   useEffect(() => {
+    // Jalankan hanya di client side
     const savedUser = localStorage.getItem('user');
-    if (savedUser) setUser(JSON.parse(savedUser));
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error("Failed to parse user from localStorage", e);
+        localStorage.removeItem('user'); // Hapus data rusak
+      }
+    }
+    setIsLoading(false); // ✅ SET FALSE: Selesai loading
   }, []);
 
   const login = (userData: User) => {
@@ -33,7 +45,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}> 
       {children}
     </AuthContext.Provider>
   );

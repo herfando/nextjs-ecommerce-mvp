@@ -13,14 +13,14 @@ interface Product {
 
 // Data Hardcoded dari kode JS lama Anda
 const DUMMY_PRODUCTS: Product[] = [
-    { id: 1, img: "/images/product1.png", title: "Sneakers Court Minimalis", price: "Rp275.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 2, img: "/images/product2.png", title: "Kaos Crewneck Esensial", price: "Rp800.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 3, img: "/images/product3.png", title: "Tas Selempang Klasik", price: "Rp1.600.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 4, img: "/images/product4.png", title: "Kaos Soft Touch", price: "Rp650.000", rating: "4.6", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 5, img: "/images/product5.png", title: "Overshirt Utility", price: "Rp375.000", rating: "4.5", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 6, img: "/images/product6.png", title: "Sweater Rajut Cable", price: "Rp1.300.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 7, img: "/images/product7.png", title: "Syal Wol Kotak", price: "Rp220.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    { id: 8, img: "/images/product8.png", title: "Syal Wol Solid", price: "Rp180.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 1, img: "/product1.png", title: "Sneakers Court Minimalis", price: "Rp275.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 2, img: "/product2.png", title: "Kaos Crewneck Esensial", price: "Rp800.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 3, img: "/product3.png", title: "Tas Selempang Klasik", price: "Rp1.600.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 4, img: "/product4.png", title: "Kaos Soft Touch", price: "Rp650.000", rating: "4.6", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 5, img: "/product5.png", title: "Overshirt Utility", price: "Rp375.000", rating: "4.5", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 6, img: "/product6.png", title: "Sweater Rajut Cable", price: "Rp1.300.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 7, img: "/product7.png", title: "Syal Wol Kotak", price: "Rp220.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 8, img: "/product8.png", title: "Syal Wol Solid", price: "Rp180.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
     // Anda bisa menambahkan produk lainnya di sini
 ];
 
@@ -28,9 +28,9 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
     <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
         {/* Product Image */}
         <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
-            {/* Asumsi gambar berada di public/images/ (dikonversi dari /src/assets) */}
+            {/* Asumsi gambar berada di public/ (dikonversi dari /src/assets) */}
             <Image 
-                src={product.img.replace('/src/assets', '/images')} 
+                src={product.img.replace('/src/assets', '')} 
                 alt={product.title} 
                 fill
                 style={{ objectFit: 'cover' }}

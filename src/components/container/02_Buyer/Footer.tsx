@@ -16,7 +16,7 @@ export default function Footer() {
             {/* Logo & Sosmed Section */}
             <div className="flex flex-col gap-4">
                 <Link href="/" className="flex items-center gap-2">
-                    <Image src="/images/companyicon.png" alt="Shirt Logo" width={32} height={32} />
+                    <Image src="/companyicon.png" alt="Shirt Logo" width={32} height={32} />
                     <span className="text-2xl font-bold">Shirt</span>
                 </Link>
                 <p className="text-gray-600 max-w-sm text-sm">
