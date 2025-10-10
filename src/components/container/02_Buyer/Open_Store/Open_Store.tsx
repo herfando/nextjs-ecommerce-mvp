@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import Image from "next/image"
 import Link from "next/link"
@@ -34,26 +33,31 @@ export default function OpenStore() {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log("✅ Store submitted:", values)
-    // TODO: tambahkan API call untuk create store
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-muted/20 px-4">
+    <div className="flex justify-center items-center min-h-screen bg-muted/20 p-6">
       <Card className="w-full max-w-sm p-6 rounded-2xl shadow-md bg-background border">
-        <div className="flex flex-col items-center mb-6">
-          <Image
-            src="/logo.svg" // ganti logomu
-            alt="Logo"
-            width={40}
-            height={40}
-            className="mb-2"
-          />
-          <h1 className="text-2xl font-semibold text-center">Open Your Store Today</h1>
-          <p className="text-sm text-muted-foreground text-center mt-1">
+        {/* Header */}
+        <div className="flex flex-col items-start p-6">
+          <div className="flex items-center gap-2 mb-3">
+            <Image
+              src="/Vector.png"
+              alt="Logo"
+              width={40}
+              height={40}
+            />
+            <span className="text-xl font-semibold text-black">Shirt</span>
+          </div>
+          <h1 className="text-2xl font-semibold text-left">
+            Open Your Store Today
+          </h1>
+          <p className="text-sm text-muted-foreground text-left mt-1">
             Start selling in minutes and reach thousands of customers instantly
           </p>
         </div>
 
+        {/* Form */}
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <CardContent className="space-y-6">
@@ -141,7 +145,7 @@ export default function OpenStore() {
             </CardContent>
 
             <CardFooter className="flex flex-col gap-2">
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full mt-2 h-11 bg-black text-white hover:bg-gray-800 rounded-lg text-base font-medium">
                 Submit
               </Button>
               <Link
