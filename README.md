@@ -24,7 +24,7 @@
 ## 🌍 Live Demo
 
 🟢 **Check it out here:**  
-👉 [https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
+👉 [Next.js E-Commerce MVP Live](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
 
 ---
 
@@ -45,7 +45,7 @@ It features a **fully typed TypeScript codebase**, modern **UI rendering**, and 
 | **Language** | [TypeScript](https://www.typescriptlang.org/) |
 | **UI Components** | [shadcn/ui](https://ui.shadcn.com), [Lucide Icons](https://lucide.dev) |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com) |
-| **Data Fetching** | [TanStack Query (React Query)](https://tanstack.com/query/latest) |
+| **Data Fetching** | [TanStack Query](https://tanstack.com/query/latest) |
 | **Forms & Validation** | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev) |
 | **Notifications** | [Sonner](https://sonner.emilkowal.ski) |
 | **State & Auth** | Custom `AuthContext` with Local Storage Persistence |
@@ -60,7 +60,7 @@ It features a **fully typed TypeScript codebase**, modern **UI rendering**, and 
 ✅ Optimistic UI updates  
 ✅ Client + Server state sync  
 ✅ Global toast notifications  
-✅ Responsive, minimal UI with Shadcn  
+✅ Responsive UI with Shadcn  
 ✅ Fully typed with TypeScript  
 
 ---
@@ -77,7 +77,7 @@ src/
 ├─ lib/
 │ ├─ api/ # API clients (axios)
 │ ├─ context/ # AuthContext
-│ ├─ hooks/ # Custom React hooks
+│ ├─ hooks/ # Custom hooks
 │ ├─ validations/ # Zod schemas
 │ ├─ providers/ # React Query provider
 │ └─ utils/ # Helpers
@@ -112,15 +112,16 @@ bash
 Salin kode
 vercel deploy
 📸 Preview
-<img src="https://media.tenor.com/N9kOe1tdPpYAAAAC/store-online.gif" width="250" alt="Store Animation" />
+
+
 Minimal yet beautiful — designed for a seamless e-commerce experience.
 
 🧑‍💻 Author
 👤 Herfando
 Frontend Developer • UI/UX Enthusiast
 
-🌐 Portfolio: https://herfando.github.io/modern-react-portfolio/
-💼 LinkedIn: https://www.linkedin.com/in/fando-933b48107/
-💻 GitHub: https://github.com/herfando
+🌐 Portfolio
+💼 LinkedIn
+💻 GitHub
 
 <div align="center"> <img src="https://media.tenor.com/hzVjKX2gkEsAAAAC/success-rocket.gif" width="180" alt="Rocket animation" /> <br /><br /> <strong>⭐ Star this repo if you like it — it helps a lot!</strong> </div> ```
