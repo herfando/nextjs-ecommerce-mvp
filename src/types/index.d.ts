@@ -1,15 +1,27 @@
-// src/types/index.d.ts (atau nama file d.ts Anda)
+// src/types/index.d.ts
 
-// Deklarasi ini mengatasi error TS2882 saat mengimpor file CSS
-declare module '*.css' {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const content: {};
-    export default content;
+export type Product = {
+    id: number
+    name: string
+    price: number
+    image?: string
+    description?: string
+    stock?: number
+    category?: string
 }
 
-// Tambahkan juga untuk SCSS/LESS jika Anda menggunakannya:
-declare module '*.scss' {
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const content: {};
-    export default content;
+declare module "*.css" {
+    const content: { [className: string]: string }
+    export default content
 }
+
+declare module "*.scss" {
+    const content: { [className: string]: string }
+    export default content
+}
+
+declare module "*.png"
+declare module "*.jpg"
+declare module "*.jpeg"
+declare module "*.svg"
+declare module "*.gif"
