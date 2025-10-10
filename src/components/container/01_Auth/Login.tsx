@@ -46,7 +46,12 @@ export default function LoginForm() {
 
     onSuccess: (data) => {
       toast.success('Login berhasil 🎉');
-      login({ email: data.email, token: data.token });
+      login({
+        id: data.id,
+        name: data.name,
+        email: data.email,
+        token: data.token,
+      });
       form.reset();
       router.push('/buyer/before_store'); // Redirect ke halaman buyer setelah login
     },

@@ -26,23 +26,26 @@ const NavAuthSection = () => {
   }
 
   if (user) {
-    // ✅ DEFENSIVE CHECK: Tentukan inisial secara aman
-    const userInitials = (user.email && user.email.length >= 2) 
-        ? user.email.substring(0, 2).toUpperCase() 
-        : 'JD'; // Default: JD jika email tidak valid atau hilang
+    const emailPart = user?.email?.split('@')[0] || '';
+    const displayName = user?.name || emailPart || 'User';
+    const userInitials = (user?.name?.slice(0, 2) || emailPart.slice(0, 2) || 'JD').toUpperCase();
+
+
 
     // KONDISI: User Sudah Login
     return (
       <div className="flex items-center gap-4">
         {/* Tombol Toko Barokah Jaya (Open Store) */}
+        <Link href="/buyer/open_store">
         <Button 
           variant="ghost" 
-          className="flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          className="hover:cursor-pointer hover:bg-black flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:text-white transition-colors"
           onClick={() => console.log('Go to Store Management')}
         >
           <Store className="w-4 h-4 text-gray-700" />
-          <span className='font-semibold'>Toko Barokah Jaya</span>
+          <span className='font-semibold'>Open Store</span>
         </Button>
+        </Link>
         
         {/* Avatar/Profil */}
         <Button variant="ghost" className="p-0 h-auto" onClick={() => console.log('Go to Profile')}>
@@ -71,7 +74,7 @@ const NavAuthSection = () => {
 };
 
 
-export default function NavbarAfterStore() {
+export default function NavbarBeforeStore() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">

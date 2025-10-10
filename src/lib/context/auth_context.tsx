@@ -2,36 +2,36 @@
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 type User = {
+  id?: number;
+  name?: string;
   email: string;
   token: string;
-  // Anda mungkin juga memiliki properti 'name'
 };
 
 type AuthContextType = {
   user: User | null;
-  login: (user: User) => void;
+  login: (userData: User) => void;
   logout: () => void;
-  isLoading: boolean; // ✅ TAMBAH: Status loading untuk Hydration
+  isLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true); // ✅ TAMBAH: State loading
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Jalankan hanya di client side
     const savedUser = localStorage.getItem('user');
     if (savedUser) {
       try {
         setUser(JSON.parse(savedUser));
-      } catch (e) {
-        console.error("Failed to parse user from localStorage", e);
-        localStorage.removeItem('user'); // Hapus data rusak
+      } catch (error) {
+        console.error("Failed to parse user from localStorage:", error);
+        localStorage.removeItem('user');
       }
     }
-    setIsLoading(false); // ✅ SET FALSE: Selesai loading
+    setIsLoading(false);
   }, []);
 
   const login = (userData: User) => {
@@ -45,14 +45,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}> 
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
 }
 
 export const useAuth = () => {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
 };

@@ -26,10 +26,9 @@ const NavAuthSection = () => {
   }
 
   if (user) {
-    // ✅ DEFENSIVE CHECK: Tentukan inisial secara aman
-    const userInitials = (user.email && user.email.length >= 2) 
-        ? user.email.substring(0, 2).toUpperCase() 
-        : 'JD'; // Default: JD jika email tidak valid atau hilang
+    const emailPart = user?.email?.split('@')[0] || '';
+    const displayName = user?.name || emailPart || 'User';
+    const userInitials = (user?.name?.slice(0, 2) || emailPart.slice(0, 2) || 'JD').toUpperCase();
 
     // KONDISI: User Sudah Login
     return (
@@ -41,7 +40,7 @@ const NavAuthSection = () => {
           onClick={() => console.log('Go to Store Management')}
         >
           <Store className="w-4 h-4 text-gray-700" />
-          <span className='font-semibold'>Open Store</span>
+          <span className='font-semibold'>Toko Barokah Jaya</span>
         </Button>
         
         {/* Avatar/Profil */}
@@ -71,7 +70,7 @@ const NavAuthSection = () => {
 };
 
 
-export default function NavbarBeforeStore() {
+export default function NavbarAfterStore() {
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
