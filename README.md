@@ -112,7 +112,7 @@ bash
 Salin kode
 vercel deploy
 📸 Preview
-<img width="1383" height="913" alt="Image" src="https://github.com/user-attachments/assets/975d527b-27f0-4fc0-818f-73479212dbe7?raw=true" />
+[<img width="1383" height="913" alt="Image" src="https://github.com/user-attachments/assets/975d527b-27f0-4fc0-818f-73479212dbe7?raw=true" />](https://private-user-images.githubusercontent.com/182643423/499885256-975d527b-27f0-4fc0-818f-73479212dbe7.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAxMDM0MjQsIm5iZiI6MTc2MDEwMzEyNCwicGF0aCI6Ii8xODI2NDM0MjMvNDk5ODg1MjU2LTk3NWQ1MjdiLTI3ZjAtNGZjMC04MThmLTczNDc5MjEyZGJlNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxMFQxMzMyMDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iNDJlODYzNmZhODdmOGY3Y2FhNTBmMjM2OWE0NDIzYmM5MTY1NTI0ZTEyZDFkZjZlMzYyNzIyZmEzMGMzYmVhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.rzIWhLR_SoEUN-pZyk7l0tbSmaUGlTwHKwlsQwTUO3A)
 Minimal yet beautiful — designed for a seamless e-commerce experience.
 
 🧑‍💻 Author
