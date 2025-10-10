@@ -15,10 +15,15 @@ export default function NavbarBeforeLogin() {
   const handleLogin = () => router.push('/auth/login');
   const handleRegister = () => router.push('/auth/register');
   const handleCategory = () => console.log('Go to Category Page'); // Placeholder
-  const handleSearch = (e) => {
-    e.preventDefault();
-    console.log('Perform search with:', e.target.search_query.value); // Placeholder
-  };
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  const form = e.currentTarget;
+  const input = form.elements.namedItem('search_query') as HTMLInputElement | null;
+
+  if (input) {
+    console.log('Perform search with:', input.value);
+  }
+};
   
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
@@ -79,7 +84,7 @@ export default function NavbarBeforeLogin() {
             Login
           </Button>
 
-          {/* Tombol Register (Warna Hitam Solid sesuai Figma) */}
+          {/* Tombol Register */}
           <Button 
             variant="outline" 
             onClick={handleRegister} 

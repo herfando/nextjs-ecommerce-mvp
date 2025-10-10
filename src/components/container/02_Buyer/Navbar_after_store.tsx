@@ -89,7 +89,7 @@ export default function NavbarAfterStore() {
             {/* Catalog Button */}
             <Button variant="outline" className="h-10 px-3 flex items-center gap-1.5 text-sm">
                 <LayoutGrid className="w-4 h-4" />
-                <span>Category</span>
+                <span>Catalog</span>
             </Button>
 
             {/* Search Form */}
