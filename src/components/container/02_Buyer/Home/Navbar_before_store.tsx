@@ -36,14 +36,16 @@ const NavAuthSection = () => {
     return (
       <div className="flex items-center gap-4">
         {/* Tombol Toko Barokah Jaya (Open Store) */}
+        <Link href="/buyer/open_store">
         <Button 
           variant="ghost" 
-          className="flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+          className="hover:cursor-pointer hover:bg-black flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:text-white transition-colors"
           onClick={() => console.log('Go to Store Management')}
         >
           <Store className="w-4 h-4 text-gray-700" />
           <span className='font-semibold'>Open Store</span>
         </Button>
+        </Link>
         
         {/* Avatar/Profil */}
         <Button variant="ghost" className="p-0 h-auto" onClick={() => console.log('Go to Profile')}>
