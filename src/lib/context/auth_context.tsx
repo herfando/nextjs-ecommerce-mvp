@@ -6,6 +6,8 @@ type User = {
   name?: string;
   email: string;
   token: string;
+  hasStore?: boolean; // ✅ tambahkan tanda tanya supaya opsional
+  store?: any;        // ✅ juga opsional
 };
 
 type AuthContextType = {
@@ -13,6 +15,7 @@ type AuthContextType = {
   login: (userData: User) => void;
   logout: () => void;
   isLoading: boolean;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -45,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading, setUser }}>
       {children}
     </AuthContext.Provider>
   );

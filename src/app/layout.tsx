@@ -6,6 +6,7 @@ import QueryProvider from "@/lib/providers/query_provider";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/context/auth_context";
 
+// ✅ Font setup
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,8 +17,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// ✅ Global metadata for the whole website
+// ✅ Global metadata configuration
 export const metadata: Metadata = {
+  metadataBase: new URL("https://herfando-store.vercel.app"), // <— tambahkan ini biar hilang warning build
   title: {
     default: "Herfando Store | Next.js E-Commerce MVP",
     template: "%s | Herfando Store",
@@ -28,7 +30,7 @@ export const metadata: Metadata = {
     title: "Herfando Store | Next.js E-Commerce MVP",
     description:
       "Explore Herfando Store — a modern e-commerce MVP built using Next.js and React Query, featuring a smooth shopping experience and scalable architecture.",
-    url: "https://github.com/herfando/nextjs-ecommerce-mvp",
+    url: "https://herfando-store.vercel.app",
     siteName: "Herfando Store",
     images: [
       {
@@ -40,6 +42,13 @@ export const metadata: Metadata = {
     ],
     locale: "en_US",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Herfando Store | Next.js E-Commerce MVP",
+    description:
+      "Explore a clean, modern e-commerce experience built with Next.js and React Query.",
+    images: ["/og-image.png"],
   },
   icons: {
     icon: "/favicon.ico",
@@ -59,15 +68,16 @@ export const metadata: Metadata = {
   creator: "Herfando",
 };
 
+// ✅ Main Layout
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         <QueryProvider>
           <AuthProvider>
