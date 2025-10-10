@@ -127,4 +127,3 @@ Frontend Developer • UI/UX Enthusiast
 💼 LinkedIn
 💻 GitHub
 
-<div align="center"> <img src="https://media.tenor.com/hzVjKX2gkEsAAAAC/success-rocket.gif" width="180" alt="Rocket animation" /> <br /><br /> <strong>⭐ Star this repo if you like it — it helps a lot!</strong> </div> ```
