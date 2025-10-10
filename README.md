@@ -30,15 +30,6 @@
 📸 Preview
 <img src="https://private-user-images.githubusercontent.com/182643423/499885256-975d527b-27f0-4fc0-818f-73479212dbe7.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAxMDM4OTAsIm5iZiI6MTc2MDEwMzU5MCwicGF0aCI6Ii8xODI2NDM0MjMvNDk5ODg1MjU2LTk3NWQ1MjdiLTI3ZjAtNGZjMC04MThmLTczNDc5MjEyZGJlNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxMFQxMzM5NTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yODk0YjI3MTI2Y2Q4ZjM1NjYyODZiNzA1YjkxNDJjNWQxMjEzYTFmOGFlNzZjOWZiNzc4NzZjMTkxYTE1YzExJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.xZqPjYUdEDY24gmPG_tPRcuKNG9pnHwHm-38goN4fU4"/>
 
-Minimal yet beautiful — designed for a seamless e-commerce experience.
-
-🧑‍💻 Author
-👤 Herfando
-Frontend Developer • UI/UX Enthusiast
-
-🌐 Portfolio
-💼 LinkedIn
-💻 GitHub
 ---
 
 ## ✨ Overview
@@ -124,3 +115,16 @@ Easily deploy to Vercel — optimized out of the box for Next.js.
 bash
 Salin kode
 vercel deploy
+
+
+Minimal yet beautiful — designed for a seamless e-commerce experience.
+
+🧑‍💻 Author
+👤 Herfando
+Frontend Developer • UI/UX Enthusiast
+
+🌐 Portfolio
+💼 LinkedIn
+💻 GitHub
+
+<div align="center"> <img src="https://media.tenor.com/hzVjKX2gkEsAAAAC/success-rocket.gif" width="180" alt="Rocket animation" /> <br /><br /> <strong>⭐ Star this repo if you like it — it helps a lot!</strong> </div> ```
