@@ -1,36 +1,126 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
+  <img src="https://media.tenor.com/3vXxg1O3Fz0AAAAC/shop-cart-shopping.gif" width="120" alt="E-commerce cart animation" />
+  <h1>🛍️ Next.js E-Commerce MVP</h1>
+  <p>
+    <strong>A modern, high-performance e-commerce MVP built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, and TanStack Query.</strong>
+  </p>
 
-## Getting Started
+  <p>
+    <a href="https://nextjs.org"><img src="https://img.shields.io/badge/Next.js-15.5.4-black?style=for-the-badge&logo=next.js" alt="Next.js" /></a>
+    <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.6-blue?style=for-the-badge&logo=typescript" alt="TypeScript" /></a>
+    <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/TailwindCSS-3.4-38BDF8?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS" /></a>
+    <a href="https://tanstack.com/query/latest"><img src="https://img.shields.io/badge/TanStack_Query-5-orange?style=for-the-badge&logo=react-query" alt="TanStack Query" /></a>
+    <a href="https://ui.shadcn.com"><img src="https://img.shields.io/badge/shadcn/ui-Modern_UI-8B5CF6?style=for-the-badge&logo=shadcnui" alt="shadcn/ui" /></a>
+  </p>
 
-First, run the development server:
+  <img src="https://media.tenor.com/x3DTPv6YdOAAAAAi/web-developer-coding.gif" width="250" alt="Coding animation" />
+
+  <br />
+  <br />
+</div>
+
+---
+
+## 🌍 Live Demo
+
+🟢 **Check it out here:**  
+👉 [https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
+
+---
+
+## ✨ Overview
+
+**Next.js E-Commerce MVP** is a minimal yet powerful online store foundation — built for speed, scalability, and clean architecture.  
+It features a **fully typed TypeScript codebase**, modern **UI rendering**, and seamless **server-state caching** using TanStack Query.
+
+> 💡 Ideal for developers and startups who want a production-grade e-commerce starter with best practices included.
+
+---
+
+## 🚀 Tech Stack
+
+| Category | Tools / Libraries |
+|-----------|------------------|
+| **Framework** | [Next.js 15](https://nextjs.org) |
+| **Language** | [TypeScript](https://www.typescriptlang.org/) |
+| **UI Components** | [shadcn/ui](https://ui.shadcn.com), [Lucide Icons](https://lucide.dev) |
+| **Styling** | [Tailwind CSS](https://tailwindcss.com) |
+| **Data Fetching** | [TanStack Query (React Query)](https://tanstack.com/query/latest) |
+| **Forms & Validation** | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev) |
+| **Notifications** | [Sonner](https://sonner.emilkowal.ski) |
+| **State & Auth** | Custom `AuthContext` with Local Storage Persistence |
+
+---
+
+## 💻 Features
+
+✅ User Authentication (Login & Register)  
+✅ Store Registration Flow  
+✅ Product Listing Pages  
+✅ Optimistic UI updates  
+✅ Client + Server state sync  
+✅ Global toast notifications  
+✅ Responsive, minimal UI with Shadcn  
+✅ Fully typed with TypeScript  
+
+---
+
+## 🧱 Project Structure
+
+src/
+├─ app/ # App Router Pages
+│ ├─ auth/ # Login & Register
+│ ├─ buyer/ # Buyer-side views
+│ ├─ seller/ # Seller dashboard
+│ └─ layout.tsx # Root layout
+├─ components/ # Reusable UI components
+├─ lib/
+│ ├─ api/ # API clients (axios)
+│ ├─ context/ # AuthContext
+│ ├─ hooks/ # Custom React hooks
+│ ├─ validations/ # Zod schemas
+│ ├─ providers/ # React Query provider
+│ └─ utils/ # Helpers
+└─ types/ # Global types
+
+yaml
+Salin kode
+
+---
+
+## ⚙️ Installation & Usage
+
+### 1️⃣ Clone Repository
 
 ```bash
+git clone https://github.com/herfando/nextjs-ecommerce-mvp.git
+cd nextjs-ecommerce-mvp
+2️⃣ Install Dependencies
+bash
+Salin kode
+npm install
+3️⃣ Start Development Server
+bash
+Salin kode
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Then open 👉 http://localhost:3000
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+🚢 Deployment
+Easily deploy to Vercel — optimized out of the box for Next.js.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+bash
+Salin kode
+vercel deploy
+📸 Preview
+<img src="https://media.tenor.com/N9kOe1tdPpYAAAAC/store-online.gif" width="250" alt="Store Animation" />
+Minimal yet beautiful — designed for a seamless e-commerce experience.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+🧑‍💻 Author
+👤 Herfando
+Frontend Developer • UI/UX Enthusiast
 
-## Learn More
+🌐 Portfolio: https://herfando.github.io/modern-react-portfolio/
+💼 LinkedIn: https://www.linkedin.com/in/fando-933b48107/
+💻 GitHub: https://github.com/herfando
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+<div align="center"> <img src="https://media.tenor.com/hzVjKX2gkEsAAAAC/success-rocket.gif" width="180" alt="Rocket animation" /> <br /><br /> <strong>⭐ Star this repo if you like it — it helps a lot!</strong> </div> ```
