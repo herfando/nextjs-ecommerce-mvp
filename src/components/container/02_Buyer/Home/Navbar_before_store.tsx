@@ -26,10 +26,11 @@ const NavAuthSection = () => {
   }
 
   if (user) {
-    // ✅ DEFENSIVE CHECK: Tentukan inisial secara aman
-    const userInitials = (user.email && user.email.length >= 2) 
-        ? user.email.substring(0, 2).toUpperCase() 
-        : 'JD'; // Default: JD jika email tidak valid atau hilang
+    const emailPart = user?.email?.split('@')[0] || '';
+    const displayName = user?.name || emailPart || 'User';
+    const userInitials = (user?.name?.slice(0, 2) || emailPart.slice(0, 2) || 'JD').toUpperCase();
+
+
 
     // KONDISI: User Sudah Login
     return (
