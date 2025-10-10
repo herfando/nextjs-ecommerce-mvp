@@ -112,7 +112,7 @@ bash
 Salin kode
 vercel deploy
 📸 Preview
-<img width="1383" height="913" alt="Image" src="https://github.com/user-attachments/assets/975d527b-27f0-4fc0-818f-73479212dbe7" />
+<img width="1383" height="913" alt="Image" src="https://github.com/user-attachments/assets/975d527b-27f0-4fc0-818f-73479212dbe7?raw=true" />
 Minimal yet beautiful — designed for a seamless e-commerce experience.
 
 🧑‍💻 Author
