@@ -30,6 +30,8 @@ export default function OpenStore() {
       postalCode: "",
       address: "",
     },
+     mode: "onBlur",          // validasi saat field blur
+     reValidateMode: "onChange", // validasi ulang saat user ubah
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -74,7 +76,7 @@ export default function OpenStore() {
                         <FormControl>
                           <Input placeholder="Store Name" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500"/>
                       </FormItem>
                     )}
                   />
@@ -87,7 +89,7 @@ export default function OpenStore() {
                         <FormControl>
                           <Input placeholder="Store Domain" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500"/>
                       </FormItem>
                     )}
                   />
@@ -106,7 +108,7 @@ export default function OpenStore() {
                         <FormControl>
                           <Input placeholder="City" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500"/>
                       </FormItem>
                     )}
                   />
@@ -119,7 +121,7 @@ export default function OpenStore() {
                         <FormControl>
                           <Input placeholder="Postal Code" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500"/>
                       </FormItem>
                     )}
                   />
@@ -132,7 +134,7 @@ export default function OpenStore() {
                         <FormControl>
                           <Textarea placeholder="Detail Address" {...field} />
                         </FormControl>
-                        <FormMessage />
+                        <FormMessage className="text-red-500"/>
                        </FormItem>
                     )}
                   />
