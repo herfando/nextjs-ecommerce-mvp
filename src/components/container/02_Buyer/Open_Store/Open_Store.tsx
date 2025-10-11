@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import Image from "next/image"
 import Link from "next/link"
@@ -36,8 +37,8 @@ export default function OpenStore() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-muted/20 p-6">
-      <Card className="w-full max-w-sm p-6 rounded-2xl shadow-md bg-background border">
+    <div className="flex justify-center items-center min-h-screen bg-muted/20 p-20">
+      <Card className="w-full max-w-sm p-3 rounded-2xl shadow-md bg-background border">
         {/* Header */}
         <div className="flex flex-col items-start p-6">
           <div className="flex items-center gap-2 mb-3">
@@ -127,12 +128,12 @@ export default function OpenStore() {
                     control={form.control}
                     name="address"
                     render={({ field }) => (
-                      <FormMessage>
+                       <FormItem>
                         <FormControl>
-                          <Input placeholder="Detail Address" {...field} />
+                          <Textarea placeholder="Detail Address" {...field} />
                         </FormControl>
                         <FormMessage />
-                      </FormMessage>
+                       </FormItem>
                     )}
                   />
                 </div>
