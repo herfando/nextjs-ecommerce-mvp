@@ -63,14 +63,13 @@ export default function OpenStore() {
             <CardContent className="space-y-6">
               {/* STORE PROFILE */}
               <div>
-                <h2 className="text-xs font-medium text-muted-foreground mb-2">STORE PROFILE</h2>
+                <h2 className="font-bold text-l text-muted-foreground mb-2">STORE PROFILE</h2>
                 <div className="space-y-3">
                   <FormField
                     control={form.control}
                     name="storeName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Store Name</FormLabel>
                         <FormControl>
                           <Input placeholder="Store Name" {...field} />
                         </FormControl>
@@ -84,7 +83,6 @@ export default function OpenStore() {
                     name="storeDomain"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Store Domain</FormLabel>
                         <FormControl>
                           <Input placeholder="Store Domain" {...field} />
                         </FormControl>
@@ -97,14 +95,13 @@ export default function OpenStore() {
 
               {/* STORE ADDRESS */}
               <div>
-                <h2 className="text-xs font-medium text-muted-foreground mb-2">STORE ADDRESS</h2>
+                <h2 className="text-l font-bold text-muted-foreground mb-2">STORE ADDRESS</h2>
                 <div className="space-y-3">
                   <FormField
                     control={form.control}
                     name="city"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>City</FormLabel>
                         <FormControl>
                           <Input placeholder="City" {...field} />
                         </FormControl>
@@ -118,7 +115,6 @@ export default function OpenStore() {
                     name="postalCode"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Postal Code</FormLabel>
                         <FormControl>
                           <Input placeholder="Postal Code" {...field} />
                         </FormControl>
@@ -131,13 +127,12 @@ export default function OpenStore() {
                     control={form.control}
                     name="address"
                     render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Detail Address</FormLabel>
+                      <FormMessage>
                         <FormControl>
                           <Input placeholder="Detail Address" {...field} />
                         </FormControl>
                         <FormMessage />
-                      </FormItem>
+                      </FormMessage>
                     )}
                   />
                 </div>
@@ -150,7 +145,7 @@ export default function OpenStore() {
               </Button>
               <Link
                 href="/"
-                className="text-sm text-center text-muted-foreground hover:underline"
+                className="font-bold border-b text-sm text-center text-muted-foreground hover:underline"
               >
                 Back
               </Link>
