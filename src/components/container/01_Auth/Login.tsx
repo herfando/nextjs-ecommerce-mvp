@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, TLoginSchema } from '@/lib/validations/auth';
+import { loginSchema, TLoginSchema } from '@/lib/validations/auth_validations';
 import api from '@/lib/api/apiClient';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';

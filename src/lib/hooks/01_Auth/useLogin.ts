@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import api from '@/lib/api/apiClient';
-import { TLoginSchema } from '@/lib/validations/auth';
+import { TLoginSchema } from '@/lib/validations/auth_validations';
 
 export function useLogin() {
     return useMutation({
