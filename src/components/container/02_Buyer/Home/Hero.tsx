@@ -8,7 +8,7 @@ const MODEL_IMAGE_SRC = "/modelpicture.png";
 export default function HeroSection() {
   return (
     // Menggunakan padding, margin, dan warna latar belakang sesuai desain awal
-    <section className="bg-white py-5 px-5 transition-all duration-500 ease-in-out">
+    <section className="mt-10 bg-white py-5 px-5 transition-all duration-500 ease-in-out">
       <div 
         // Menggunakan max-w-7xl (sekitar w-300 di desktop) dan menyesuaikan gap
         className="max-w-7xl mx-auto p-5 md:p-10 rounded-2xl w-full grid grid-cols-1 md:grid-cols-2 md:gap-20 justify-center items-center bg-[#F3D7A4] shadow-xl overflow-hidden"

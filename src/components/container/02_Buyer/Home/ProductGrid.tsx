@@ -21,15 +21,24 @@ const DUMMY_PRODUCTS: Product[] = [
     { id: 6, img: "/product6.png", title: "Sweater Rajut Cable", price: "Rp1.300.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
     { id: 7, img: "/product7.png", title: "Syal Wol Kotak", price: "Rp220.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
     { id: 8, img: "/product8.png", title: "Syal Wol Solid", price: "Rp180.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
-    // Anda bisa menambahkan produk lainnya di sini
+    { id: 9, img: "/product9.png", title: "Celana Panjang Tailored", price: "Rp2.200.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 10, img: "/product10.png", title: "Sneakers Harian", price: "Rp1.900.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 11, img: "/product11.png", title: "Jaket Puffer Quilted", price: "Rp450.000", rating: "4.6", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 12, img: "/product12.png", title: "Kemeja Oxford", price: "Rp950.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 13, img: "/product13.png", title: "Celana Pendek Chino", price: "Rp120.000", rating: "4.5", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 14, img: "/product14.png", title: "Topi Baseball 6-Panel", price: "Rp320.000", rating: "4.7", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 15, img: "/product15.png", title: "Kaos Katun Premium", price: "Rp1.100.000", rating: "4.9", sold: "10 Sold", store: "Toko Barokah Jaya" },
+    { id: 16, img: "/product16.png", title: "Hoodie Pullover Fleece", price: "Rp275.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
 ];
 
 export default function ProductGrid() {
     return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 p-5 max-w-7xl mx-auto">
-            {DUMMY_PRODUCTS.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
+        <div className="text-[#0A0D12] p-5 md:p-0 gap-5 md:text-4xl text-2xl max-w-7xl mx-auto font-bold transition-all duration-500 ease-in-out">Featured Product
+            <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto">
+                {DUMMY_PRODUCTS.map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                ))}
+            </div>
         </div>
     );
 }
