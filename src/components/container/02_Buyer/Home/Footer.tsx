@@ -10,7 +10,7 @@ const FooterLink = ({ href, children }: { href: string, children: React.ReactNod
 
 export default function Footer() {
   return (
-    <footer className="bg-white border-t border-gray-100 pt-10  pb-8 mt-12 max-w-7xl mx-auto">
+    <footer className="bg-white border-t border-gray-100 pt-10 pb-8 mt-20 max-w-7xl mx-auto">
         <div className="md:mx-0 mx-5 relative w-full sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
             
             {/* Logo & Sosmed Section */}
