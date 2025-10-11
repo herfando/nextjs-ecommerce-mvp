@@ -35,7 +35,7 @@ export default function HeroSection() {
 
         {/* Kolom Kiri: Gambar Model (Dibuat responsif sesuai dimensi HTML) */}
         <div 
-          className="relative w-full aspect-[4/5] max-w-[300px] md:max-w-none 
+          className="relative w-full aspect-[4/5] md:max-w-none 
                    h-[185px] md:h-[367px] mx-auto flex justify-center items-end 
                    md:order-1 overflow-hidden"
         >
@@ -46,7 +46,7 @@ export default function HeroSection() {
             // Setting 'sizes' yang lebih generik untuk Image component
             fill
             style={{ objectFit: 'contain' }}
-            sizes="(max-width: 768px) 50vw, 30vw"
+            sizes="w-full"
             
             // Menerapkan styling HTML: desktop:-translate-x-20 
             // Di Next/Tailwind: md:-translate-x-20

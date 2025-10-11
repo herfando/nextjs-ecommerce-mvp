@@ -32,9 +32,9 @@ const NavAuthSection = () => {
 
 
 
-    // KONDISI: User Sudah Login
+    
     return (
-      <div className="flex items-center gap-4">
+      <div className="flex items-center">
         {/* Tombol Toko Barokah Jaya (Open Store) */}
         <Link href="/buyer/open_store">
         <Button 
@@ -60,7 +60,7 @@ const NavAuthSection = () => {
     );
   }
 
-  // KONDISI: User Belum Login
+ 
   return (
     <div className="flex items-center gap-2">
       <Button variant="ghost" onClick={() => router.push('/auth/login')} className="text-sm px-3 py-2 h-10">

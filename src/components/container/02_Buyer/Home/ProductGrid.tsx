@@ -24,11 +24,21 @@ const DUMMY_PRODUCTS: Product[] = [
     // Anda bisa menambahkan produk lainnya di sini
 ];
 
+export default function ProductGrid() {
+    return (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 p-5 max-w-7xl mx-auto">
+            {DUMMY_PRODUCTS.map((product) => (
+                <ProductCard key={product.id} product={product} />
+            ))}
+        </div>
+    );
+}
+
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
-    <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+    <div className=" flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
         {/* Product Image */}
-        <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
-            {/* Asumsi gambar berada di public/ (dikonversi dari /src/assets) */}
+        <div className=" relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
+            
             <Image 
                 src={product.img.replace('/src/assets', '')} 
                 alt={product.title} 
@@ -55,12 +65,3 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
 );
 
 
-export default function ProductGrid() {
-    return (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {DUMMY_PRODUCTS.map((product) => (
-                <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
-    );
-}
