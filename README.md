@@ -1,7 +1,9 @@
 <div align="center">
-  
+
   <img src="https://media.tenor.com/3vXxg1O3Fz0AAAAC/shop-cart-shopping.gif" width="120" alt="E-commerce cart animation" />
+  
   <h1>🛍️ Next.js E-Commerce MVP</h1>
+  
   <p>
     <strong>A modern, high-performance e-commerce MVP built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, and TanStack Query.</strong>
   </p>
@@ -15,29 +17,27 @@
   </p>
 
   <img src="https://media.tenor.com/x3DTPv6YdOAAAAAi/web-developer-coding.gif" width="250" alt="Coding animation" />
-
-  <br />
-  <br />
+  <br /><br />
 </div>
 
 ---
 
 ## 🌍 Live Demo
 
-🟢 **Check it out here:**  
-👉 [Next.js E-Commerce MVP Live](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
+🟢 **Experience the app live:**  
+👉 [Next.js E-Commerce MVP](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
 
-📸 Preview
-<img src="https://private-user-images.githubusercontent.com/182643423/499885256-975d527b-27f0-4fc0-818f-73479212dbe7.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAxMDM4OTAsIm5iZiI6MTc2MDEwMzU5MCwicGF0aCI6Ii8xODI2NDM0MjMvNDk5ODg1MjU2LTk3NWQ1MjdiLTI3ZjAtNGZjMC04MThmLTczNDc5MjEyZGJlNy5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMDEwJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTAxMFQxMzM5NTBaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0yODk0YjI3MTI2Y2Q4ZjM1NjYyODZiNzA1YjkxNDJjNWQxMjEzYTFmOGFlNzZjOWZiNzc4NzZjMTkxYTE1YzExJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.xZqPjYUdEDY24gmPG_tPRcuKNG9pnHwHm-38goN4fU4"/>
+📸 **Preview:**
+<img src="https://private-user-images.githubusercontent.com/182643423/499885256-975d527b-27f0-4fc0-818f-73479212dbe7.png" width="800" />
 
 ---
 
 ## ✨ Overview
 
-**Next.js E-Commerce MVP** is a minimal yet powerful online store foundation — built for speed, scalability, and clean architecture.  
-It features a **fully typed TypeScript codebase**, modern **UI rendering**, and seamless **server-state caching** using TanStack Query.
+**Next.js E-Commerce MVP** is a minimal yet powerful online store foundation — built for **speed, scalability, and clean architecture**.  
+It provides a **typed TypeScript codebase**, **server-state caching** via TanStack Query, and **modern UI** built with shadcn/ui.
 
-> 💡 Ideal for developers and startups who want a production-grade e-commerce starter with best practices included.
+> 💡 Perfect for developers and startups seeking a production-grade e-commerce starter kit following best practices.
 
 ---
 
@@ -53,19 +53,21 @@ It features a **fully typed TypeScript codebase**, modern **UI rendering**, and 
 | **Forms & Validation** | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev) |
 | **Notifications** | [Sonner](https://sonner.emilkowal.ski) |
 | **State & Auth** | Custom `AuthContext` with Local Storage Persistence |
+| **Deployment** | [Vercel](https://vercel.com) |
 
 ---
 
 ## 💻 Features
 
-✅ User Authentication (Login & Register)  
-✅ Store Registration Flow  
-✅ Product Listing Pages  
+✅ Authentication (Login & Register)  
+✅ Seller onboarding & store creation flow  
+✅ Product listing and management  
 ✅ Optimistic UI updates  
-✅ Client + Server state sync  
 ✅ Global toast notifications  
-✅ Responsive UI with Shadcn  
+✅ Client + Server state synchronization  
+✅ Responsive design (mobile-first)  
 ✅ Fully typed with TypeScript  
+✅ Easy to deploy on Vercel  
 
 ---
 
@@ -77,15 +79,34 @@ src/
 │ ├─ buyer/ # Buyer-side views
 │ ├─ seller/ # Seller dashboard
 │ └─ layout.tsx # Root layout
+│
 ├─ components/ # Reusable UI components
 ├─ lib/
 │ ├─ api/ # API clients (axios)
 │ ├─ context/ # AuthContext
-│ ├─ hooks/ # Custom hooks
+│ ├─ hooks/ # Custom React hooks
 │ ├─ validations/ # Zod schemas
-│ ├─ providers/ # React Query provider
-│ └─ utils/ # Helpers
-└─ types/ # Global types
+│ ├─ providers/ # React Query providers
+│ └─ utils/ # Helper functions
+└─ types/ # Global TypeScript types
+
+yaml
+Salin kode
+
+---
+
+## 🏗️ Architecture Diagram
+
+[Next.js 15 App Router]
+│
+▼
+[TanStack Query] ───► [Axios API Layer]
+│
+▼
+[Auth Context + Local Storage]
+│
+▼
+[shadcn/ui + Tailwind UI Components]
 
 yaml
 Salin kode
@@ -95,7 +116,6 @@ Salin kode
 ## ⚙️ Installation & Usage
 
 ### 1️⃣ Clone Repository
-
 ```bash
 git clone https://github.com/herfando/nextjs-ecommerce-mvp.git
 cd nextjs-ecommerce-mvp
@@ -110,20 +130,48 @@ npm run dev
 Then open 👉 http://localhost:3000
 
 🚢 Deployment
-Easily deploy to Vercel — optimized out of the box for Next.js.
+Deploy instantly to Vercel (optimized for Next.js):
 
 bash
 Salin kode
 vercel deploy
+Your site will be live in seconds 🚀
 
+🧪 Future Improvements
+🧩 Integrate real payment gateway (e.g. Stripe)
 
-Minimal yet beautiful — designed for a seamless e-commerce experience.
+🛒 Implement shopping cart persistence
 
-🧑‍💻 Author
-👤 Herfando
+📦 Add order management for sellers
+
+🔍 Improve search with server-side filters
+
+📈 Analytics dashboard
+
+🤝 Contributing
+Contributions, issues, and feature requests are welcome!
+To contribute:
+
+Fork the repo
+
+Create a new branch (feature/awesome-feature)
+
+Commit and push
+
+Submit a PR 🎉
+
+📄 License
+Licensed under the MIT License — free to use and modify.
+
+👨‍💻 Author
+Herfando
 Frontend Developer • UI/UX Enthusiast
 
 🌐 Portfolio
 💼 LinkedIn
 💻 GitHub
 
+<div align="center">
+✨ “Minimal yet beautiful — designed for a seamless e-commerce experience.” ✨
+
+</div> ```
