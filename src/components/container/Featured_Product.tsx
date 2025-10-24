@@ -31,7 +31,7 @@ const DUMMY_PRODUCTS: Product[] = [
     { id: 16, img: "/product16.png", title: "Hoodie Pullover Fleece", price: "Rp275.000", rating: "4.8", sold: "10 Sold", store: "Toko Barokah Jaya" },
 ];
 
-export default function ProductGrid() {
+export default function FeaturedProduct() {
     return (
         <div className="text-[#0A0D12] p-5 md:p-0 gap-5 md:text-4xl text-2xl max-w-7xl mx-auto font-bold transition-all duration-500 ease-in-out">Featured Product
             <div className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto">
