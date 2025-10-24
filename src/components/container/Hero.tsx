@@ -5,7 +5,7 @@ import Link from 'next/link';
 // Mengembalikan ke SRC ASLI seperti yang ada di kode HTML Anda
 const MODEL_IMAGE_SRC = "/modelpicture.png"; 
 
-export default function HeroSection() {
+export default function Hero() {
   return (
     // Menggunakan padding, margin, dan warna latar belakang sesuai desain awal
     <section className="mt-10 bg-white py-5 px-5 transition-all duration-500 ease-in-out">
