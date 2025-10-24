@@ -16,7 +16,7 @@ export default function Detail() {
           {/* Left: Images */}
           <div>
             <Image
-              src="/assets/product1.png"
+              src="/product1.png"
               alt="Sneakers utama"
               width={500}
               height={400}
@@ -27,7 +27,7 @@ export default function Detail() {
                 (img, i) => (
                   <Image
                     key={i}
-                    src={`/assets/${img}`}
+                    src={`/${img}`}
                     alt={`thumb ${i + 1}`}
                     width={80}
                     height={80}
@@ -129,7 +129,7 @@ export default function Detail() {
           ].map((p, i) => (
             <div key={i} className="bg-white rounded-lg shadow p-4">
               <Image
-                src={`/assets/${p.img}`}
+                src={`/${p.img}`}
                 alt={p.title}
                 width={300}
                 height={240}
@@ -145,64 +145,6 @@ export default function Detail() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="bg-white shadow px-8 py-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
-          {/* Logo & Description */}
-          <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <Image src="/assets/companyicon.png" alt="Logo" width={40} height={40} />
-              <span className="font-bold text-2xl">Shirt</span>
-            </div>
-            <p className="text-sm text-gray-600 leading-relaxed mb-8">
-              Explore a realm of style with our fashion e-commerce platform, where
-              shopping is effortless. Experience a smooth journey with an extensive
-              selection of trendy apparel, all delivered directly to your home.
-            </p>
-            <p className="font-semibold text-sm mb-3">Follow on Social Media</p>
-            <div className="flex space-x-3">
-              {["sosmed1.png", "sosmed2.png", "sosmed3.png", "sosmed4.png"].map(
-                (icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    className="w-9 h-9 flex items-center justify-center border border-gray-300 rounded-full hover:bg-gray-50"
-                  >
-                    <Image
-                      src={`/assets/${icon}`}
-                      alt="Social"
-                      width={16}
-                      height={16}
-                      className="object-contain"
-                    />
-                  </a>
-                )
-              )}
-            </div>
-          </div>
-
-          {/* E-Commerce */}
-          <div className="md:pl-52">
-            <h3 className="font-semibold mb-4">E-Commerce</h3>
-            <ul className="space-y-4 text-md text-gray-600">
-              <li><a href="#" className="hover:text-black">About Us</a></li>
-              <li><a href="#" className="hover:text-black">Terms & Condition</a></li>
-              <li><a href="#" className="hover:text-black">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-black">Blog</a></li>
-            </ul>
-          </div>
-
-          {/* Help */}
-          <div className="md:pl-52 mb-10">
-            <h3 className="font-semibold mb-4">Help</h3>
-            <ul className="space-y-4 text-md text-gray-600">
-              <li><a href="#" className="hover:text-black">How to Transact</a></li>
-              <li><a href="#" className="hover:text-black">Payment Method</a></li>
-              <li><a href="#" className="hover:text-black">How to Register</a></li>
-            </ul>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }
