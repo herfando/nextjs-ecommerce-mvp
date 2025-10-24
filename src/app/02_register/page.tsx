@@ -1,6 +1,6 @@
 import Register from "@/components/container/Register";
 
-export default function Home() {
+export default function RegisterApp() {
   return (
     <>
     <Register />
