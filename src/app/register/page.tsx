@@ -1,4 +1,4 @@
-import Register from "@/components/container/01_Auth/Register";
+import Register from "@/components/container/Register";
 
 export default function Home() {
   return (
