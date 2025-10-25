@@ -44,14 +44,16 @@ export default function NavbarBeforeLogin() {
         <div className="flex items-center gap-4 flex-grow max-w-xl mx-8">
           
           {/* Catalog Button */}
+          <Link href="/07_store" passHref legacyBehavior>
           <Button 
             variant="outline" 
-            className="h-10 px-4 flex items-center gap-1.5 text-sm font-medium border-gray-300 hover:bg-gray-50 transition-colors"
+            className="cursor-pointer h-10 px-4 flex items-center gap-1.5 text-sm font-medium border-gray-300 hover:bg-gray-50 transition-colors"
             onClick={handleCategory}
           >
             <LayoutGrid className="w-4 h-4" />
             <span>Category</span>
           </Button>
+          </Link>
 
           {/* Search Form (Lebih lebar di before login) */}
           <form onSubmit={handleSearch} className="relative flex-grow h-10">
