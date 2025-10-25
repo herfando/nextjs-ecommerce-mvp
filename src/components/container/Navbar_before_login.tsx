@@ -44,7 +44,7 @@ export default function NavbarBeforeLogin() {
         <div className="flex items-center gap-4 flex-grow max-w-xl mx-8">
           
           {/* Catalog Button */}
-          <Link href="/07_store" passHref legacyBehavior>
+          <Link href="/07_store" passHref>
           <Button 
             variant="outline" 
             className="cursor-pointer h-10 px-4 flex items-center gap-1.5 text-sm font-medium border-gray-300 hover:bg-gray-50 transition-colors"

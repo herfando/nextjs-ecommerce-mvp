@@ -7,7 +7,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import Image from "next/image";
 import Link from "next/link";
-import { useOpenStore } from "@/lib/hooks/02_Buyer/useOpenStore";
+import { useOpenStore } from "@/hooks/02_Buyer/useOpenStore";
 import { StoreFormValues } from "@/lib/validations/open_store_validations";
 
 export default function OpenStore() {
