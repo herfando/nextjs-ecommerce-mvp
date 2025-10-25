@@ -2,10 +2,10 @@
 
   <img src="https://media.tenor.com/3vXxg1O3Fz0AAAAC/shop-cart-shopping.gif" width="120" alt="E-commerce cart animation" />
   
-  <h1>🛍️ Next.js E-Commerce MVP + Zustand</h1>
+  <h1>🛍️ Next.js E-Commerce MVP + Redux Toolkit</h1>
   
   <p>
-    <strong>A modern, high-performance e-commerce MVP built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, TanStack Query, and Zustand for state management.</strong>
+    <strong>A modern, high-performance e-commerce MVP built with Next.js, TypeScript, Tailwind CSS, shadcn/ui, TanStack Query, and Redux Toolkit for state management.</strong>
   </p>
 
   <p>
@@ -13,7 +13,7 @@
     <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-5.6-blue?style=for-the-badge&logo=typescript" alt="TypeScript" /></a>
     <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/TailwindCSS-3.4-38BDF8?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS" /></a>
     <a href="https://tanstack.com/query/latest"><img src="https://img.shields.io/badge/TanStack_Query-5-orange?style=for-the-badge&logo=react-query" alt="TanStack Query" /></a>
-    <a href="https://zustand-demo.pmnd.rs/"><img src="https://img.shields.io/badge/Zustand-State-7F56D9?style=for-the-badge" alt="Zustand" /></a>
+    <a href="https://redux-toolkit.js.org/"><img src="https://img.shields.io/badge/Redux_Toolkit-State-764ABC?style=for-the-badge&logo=redux" alt="Redux Toolkit" /></a>
     <a href="https://ui.shadcn.com"><img src="https://img.shields.io/badge/shadcn/ui-Modern_UI-8B5CF6?style=for-the-badge&logo=shadcnui" alt="shadcn/ui" /></a>
   </p>
 
@@ -26,7 +26,7 @@
 ## 🌍 Live Demo
 
 🟢 **Experience the app live:**  
-👉 [Next.js E-Commerce MVP + Zustand](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
+👉 [Next.js E-Commerce MVP + Redux Toolkit](https://nextjs-ecommerce-mvp-tcl9-c2f2n15mm-herfandos-projects.vercel.app/buyer/before_login)
 
 📸 **Preview:**
 <img src="https://private-user-images.githubusercontent.com/182643423/499885256-975d527b-27f0-4fc0-818f-73479212dbe7.png" width="800" />
@@ -35,8 +35,8 @@
 
 ## ✨ Overview
 
-**Next.js E-Commerce MVP + Zustand** is a minimal yet powerful online store foundation — built for **speed, scalability, and clean architecture**.  
-It provides a **typed TypeScript codebase**, **server-state caching** via TanStack Query, and **global state management** with Zustand for optimized client-side state.  
+**Next.js E-Commerce MVP + Redux Toolkit** is a minimal yet powerful online store foundation — built for **speed, scalability, and clean architecture**.  
+It provides a **typed TypeScript codebase**, **server-state caching** via TanStack Query, and **global state management** with Redux Toolkit for predictable client-side state.  
 UI is built with shadcn/ui + Tailwind CSS for modern, responsive design.
 
 > 💡 Perfect for developers and startups seeking a production-grade e-commerce starter kit following best practices.
@@ -52,7 +52,7 @@ UI is built with shadcn/ui + Tailwind CSS for modern, responsive design.
 | **UI Components** | [shadcn/ui](https://ui.shadcn.com), [Lucide Icons](https://lucide.dev) |
 | **Styling** | [Tailwind CSS](https://tailwindcss.com) |
 | **Data Fetching** | [TanStack Query](https://tanstack.com/query/latest) |
-| **State Management** | [Zustand](https://zustand-demo.pmnd.rs/) |
+| **State Management** | [Redux Toolkit](https://redux-toolkit.js.org/) |
 | **Forms & Validation** | [React Hook Form](https://react-hook-form.com), [Zod](https://zod.dev) |
 | **Notifications** | [Sonner](https://sonner.emilkowal.ski) |
 | **Authentication** | Custom `AuthContext` + Local Storage Persistence |
@@ -68,7 +68,7 @@ UI is built with shadcn/ui + Tailwind CSS for modern, responsive design.
 ✅ Optimistic UI updates  
 ✅ Global toast notifications  
 ✅ Client + Server state synchronization  
-✅ Zustand-powered global state for cart and UI  
+✅ Redux-powered global state for cart and UI  
 ✅ Responsive design (mobile-first)  
 ✅ Fully typed with TypeScript  
 ✅ Easy to deploy on Vercel  
@@ -89,7 +89,7 @@ src/
 │ ├─ api/ # API clients (axios)
 │ ├─ context/ # AuthContext
 │ ├─ hooks/ # Custom React hooks
-│ ├─ store/ # Zustand stores
+│ ├─ store/ # Redux slices & store setup
 │ ├─ validations/ # Zod schemas
 │ ├─ providers/ # React Query providers
 │ └─ utils/ # Helper functions
@@ -104,8 +104,8 @@ Salin kode
 
 ### 1️⃣ Clone Repository
 ```bash
-git clone https://github.com/herfando/nextjs-ecommerce-mvp-zustand.git
-cd nextjs-ecommerce-mvp-zustand
+git clone https://github.com/herfando/nextjs-ecommerce-mvp-redux.git
+cd nextjs-ecommerce-mvp-redux
 2️⃣ Install Dependencies
 bash
 Salin kode
@@ -124,13 +124,9 @@ Salin kode
 vercel deploy
 🧪 Future Improvements
 🧩 Integrate real payment gateway (e.g. Stripe)
-
 🛒 Implement persistent shopping cart
-
 📦 Add order management for sellers
-
 🔍 Improve search with server-side filters
-
 📈 Analytics dashboard
 
 🤝 Contributing
@@ -156,4 +152,4 @@ Frontend Developer • UI/UX Enthusiast
 💼 LinkedIn
 💻 GitHub
 
-<div align="center"> ✨ “Minimal yet beautiful — designed for a seamless e-commerce experience with Next.js + Zustand.” ✨ </div> ```
+<div align="center"> ✨ “Minimal yet beautiful — designed for a seamless e-commerce experience with Next.js + Redux Toolkit.” ✨ </div> ```
