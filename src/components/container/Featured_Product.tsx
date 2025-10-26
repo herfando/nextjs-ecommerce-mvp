@@ -75,7 +75,7 @@ export default function FeaturedProduct() {
       ];
 
       const requests = fashionCategories.map((cat) =>
-        fetch(`https://dummyjson.com/products/category/${cat}`).then((res) => res.json())
+        fetch(`https://dummyjson.com/products?limit=0`).then((res) => res.json())
       );
 
       const results = await Promise.all(requests);
