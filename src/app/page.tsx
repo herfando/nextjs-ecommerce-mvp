@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 
 export default function RootPage() {
-  redirect('/buyer/before_login');
+  redirect('/05_home');
   return null; 
 }
