@@ -4,30 +4,33 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useProducts } from "@/hooks/useProducts"; // ✅ pakai hook baru
+import { useProducts } from "@/hooks/useProducts";
+import { useSearch } from "@/context/search_context"; // 🔥 TAMBAHAN
 
 // -------------------- Component --------------------
 export default function FeaturedProduct() {
-  const { data: products = [], isLoading } = useProducts(); // ✅ ambil data dari hook
+  const { data: products = [], isLoading } = useProducts();
+  const { filteredProducts, query } = useSearch(); // 🔥 TAMBAHAN
+
   const [visibleCount, setVisibleCount] = useState(16);
   const [displayed, setDisplayed] = useState(products);
-  const [fadeKey, setFadeKey] = useState(0); // untuk trigger re-render animasi
+  const [fadeKey, setFadeKey] = useState(0);
 
-  // Shuffle & auto update setiap 6 detik
+  // 🔥 Ganti efek ini agar ikut query dari search
   useEffect(() => {
     if (!products.length) return;
 
-    const updateProducts = () => {
+    // kalau ada query dari navbar → pakai hasil filter global
+    if (query.trim()) {
+      setDisplayed(filteredProducts);
+    } else {
+      // kalau tidak ada query → tampilkan produk acak seperti sebelumnya
       const shuffled = shuffleArray(products);
       setDisplayed(shuffled);
-      setFadeKey((k) => k + 1); // ubah key untuk trigger animasi fade
-    };
+    }
 
-    updateProducts();
-    const interval = setInterval(updateProducts, 6000);
-
-    return () => clearInterval(interval);
-  }, [products]);
+    setFadeKey((k) => k + 1);
+  }, [products, filteredProducts, query]); // 🔥 TAMBAHAN dependency
 
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 16);
@@ -48,6 +51,7 @@ export default function FeaturedProduct() {
         key={fadeKey}
         className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto animate-fadeIn"
       >
+        {/* 🔥 tampilkan displayed yang sudah diproses (acak / hasil search) */}
         {displayed.slice(0, visibleCount).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

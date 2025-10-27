@@ -2,16 +2,14 @@
 
 import Image from "next/image";
 import { useProducts } from "@/hooks/useProducts";
-import { useEffect, useState } from "react";
+import { useSearch } from "@/context/search_context"; // ✅ ambil global search context
 
 export default function Catalog() {
+  // 🔥 ambil data dari hook produk
   const { data: products = [], isLoading } = useProducts(16);
-  const [filteredProducts, setFilteredProducts] = useState(products);
 
-  // Sinkronkan saat data products sudah di-load
-  useEffect(() => {
-    setFilteredProducts(products);
-  }, [products]);
+  // 🔥 ambil data dari context search (query + hasil filter)
+  const { filteredProducts, query } = useSearch();
 
   if (isLoading) {
     return (
@@ -51,9 +49,6 @@ export default function Catalog() {
           <div className="px-4 flex flex-col gap-2.5 py-4">
             <h3 className="font-semibold">Price</h3>
             <div className="flex rounded-lg border p-2 gap-2 overflow-hidden">
-              <span className="bg-gray-100 text-gray-700 px-3 flex items-center">
-                Rp
-              </span>
               <input
                 type="text"
                 placeholder="Minimum Price"
@@ -61,9 +56,6 @@ export default function Catalog() {
               />
             </div>
             <div className="flex rounded-lg border p-2 gap-2 overflow-hidden">
-              <span className="bg-gray-100 text-gray-700 px-3 flex items-center">
-                Rp
-              </span>
               <input
                 type="text"
                 placeholder="Maximum Price"
@@ -96,6 +88,7 @@ export default function Catalog() {
         <section className="col-span-3 space-y-6">
           <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
             <p className="text-sm text-gray-600">
+              {/* 🔥 pakai filteredProducts dari context */}
               Showing {filteredProducts.length} products
             </p>
 
@@ -139,6 +132,7 @@ export default function Catalog() {
           </div>
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
+            {/* 🔥 gunakan filteredProducts dari context */}
             {filteredProducts.map((product) => (
               <article
                 key={product.id}

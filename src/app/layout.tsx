@@ -4,6 +4,7 @@ import "./globals.css";
 import QueryProvider from "@/lib/providers/query_provider";
 import { Toaster } from "sonner";
 import { AuthProvider } from "@/lib/context/auth_context"; // pastikan path ini benar
+import { SearchProvider } from "@/context/search_context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,8 +38,10 @@ export default function RootLayout({
       >
         <QueryProvider>
           <AuthProvider>
+            <SearchProvider>
             {children}
             <Toaster richColors position="top-right" />
+            </SearchProvider>
           </AuthProvider>
         </QueryProvider>
       </body>
