@@ -24,6 +24,9 @@ export interface User {
 export default function Navbar() {
   const { user, isManualLogin } = useAuth();
 
+  // 🔹 tunggu context selesai hydrate
+  if (user === null && !isManualLogin) return null; // jangan render apa-apa dulu
+
   if (!user || !isManualLogin) return <NavbarBeforeLogin />;
   if (user && !user.hasStore) return <NavbarBeforeStore />;
   if (user && user.hasStore) return <NavbarAfterStore />;

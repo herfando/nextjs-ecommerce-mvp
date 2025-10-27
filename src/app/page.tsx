@@ -1,6 +1,13 @@
-import { redirect } from 'next/navigation';
+'use client';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function RootPage() {
-  redirect('/05_home');
-  return null; 
+  const router = useRouter();
+
+  useEffect(() => {
+    router.replace('/05_home/beforelogin'); // client-side redirect
+  }, [router]);
+
+  return null;
 }

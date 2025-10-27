@@ -12,8 +12,8 @@ export default function NavbarBeforeLogin() {
   const router = useRouter();
   
   // Tautan yang digunakan dalam navigasi
-  const handleLogin = () => router.push('/auth/login');
-  const handleRegister = () => router.push('/auth/register');
+  const handleLogin = () => router.push('/01_login');
+  const handleRegister = () => router.push('/02_register');
   const handleCategory = () => console.log('Go to Category Page'); // Placeholder
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
@@ -81,7 +81,7 @@ export default function NavbarBeforeLogin() {
           <Button 
             variant="outline" 
             onClick={handleLogin} 
-            className="text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white transition-colors"
+            className="cursor-pointer text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white transition-colors"
           >
             Login
           </Button>
@@ -90,7 +90,7 @@ export default function NavbarBeforeLogin() {
           <Button 
             variant="outline" 
             onClick={handleRegister} 
-             className="text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white transition-colors"
+             className="cursor-pointer text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white transition-colors"
           >
             Register
           </Button>
