@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form";
 import Image from "next/image";
 import Link from "next/link";
-import { useOpenStore } from "@/hooks/02_Buyer/useOpenStore"; 
+import { useOpenStore } from "@/hooks/useOpenStore"; 
 
 export default function OpenStore() {
     // ✅ Ambil semua yang dibutuhkan dari hook

@@ -1,11 +1,11 @@
-import NavbarBeforeStore from "@/components/container/Navbar_before_store"
+import NavbarAfterStore from "@/components/container/Navbar_after_store"
 import Catalog from '@/components/container/Catalog';
 import Footer from "@/components/container/Footer";
 
 export default function CatalogApp() {
   return (
     <>
-    <NavbarBeforeStore />
+    <NavbarAfterStore />
     <Catalog />
     <Footer />
     </>

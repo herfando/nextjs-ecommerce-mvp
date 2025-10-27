@@ -86,10 +86,12 @@ export default function NavbarAfterStore() {
         {/* Catalog & Search */}
         <div className="flex items-center gap-5">
             {/* Catalog Button */}
-            <Button variant="outline" className="h-10 px-3 flex items-center gap-1.5 text-sm">
+            <Link href="/08_catalog" >
+            <Button variant="outline" className="h-10 px-3 flex items-center gap-1.5 text-sm cursor-pointer hover:bg-black hover:text-white">
                 <LayoutGrid className="w-4 h-4" />
                 <span>Catalog</span>
             </Button>
+            </Link>
 
             {/* Search Form */}
             <div className="relative w-[300px] h-10 hidden md:block">
