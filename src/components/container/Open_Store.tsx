@@ -120,7 +120,7 @@ export default function OpenStore() {
                                 {isPending ? 'Submitting...' : 'Submit'} 
                             </Button>
                             <Link
-                                href="/"
+                                href="/05_home/afterstore"
                                 className="font-bold border-b text-sm text-center text-muted-foreground hover:underline"
                             >
                                 Back

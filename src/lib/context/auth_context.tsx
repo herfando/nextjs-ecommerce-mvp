@@ -8,6 +8,7 @@ type User = {
   token: string;
   hasStore?: boolean; // ✅ tambahkan tanda tanya supaya opsional
   store?: any;        // ✅ juga opsional
+  avatar?: string; // 
 };
 
 type AuthContextType = {

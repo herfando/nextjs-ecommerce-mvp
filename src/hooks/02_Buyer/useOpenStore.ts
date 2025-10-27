@@ -1,4 +1,4 @@
-// src/hooks/02_Buyer/useOpenStore.ts
+// ✅ src/hooks/02_Buyer/useOpenStore.ts
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 import { useAuth } from '@/lib/context/auth_context';
 import { useState } from 'react';
 
+// ✅ Validasi form pakai Zod
 const storeSchema = z.object({
     storeName: z.string().min(3, 'Store name is required'),
     storeDomain: z.string().optional(),
@@ -39,37 +40,47 @@ export function useOpenStore() {
         try {
             setIsPending(true);
 
-            // 🔹 Simulasi create store pakai DummyJSON
+            // 🔹 Simulasi create store ke DummyJSON
             const res = await fetch('https://dummyjson.com/users/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     firstName: data.storeName,
                     lastName: 'Store',
-                    image: `https://robohash.org/${data.storeName}.png`,
                     address: data.address,
+                    city: data.city,
+                    postalCode: data.postalCode,
+                    // 🔹 pakai robohash buat generate avatar unik per store
+                    image: `https://robohash.org/${encodeURIComponent(data.storeName)}.png`,
                 }),
             });
 
+            if (!res.ok) throw new Error('Failed to connect to DummyJSON');
+
             const apiData = await res.json();
 
-            // 🔹 Update context user agar Navbar berubah
-            setUser({
-                ...user!,
+            // 🔹 Update AuthContext
+            setUser(prev => ({
+                ...prev!,
                 hasStore: true,
                 storeName: data.storeName,
-                avatar: apiData.image, // pakai avatar dari dummyjson
-            });
+                avatar: apiData.image, // avatar unik hasil dari DummyJSON
+            }));
 
             toast.success('Store created successfully!');
-            router.push('/05_home'); // atau ke dashboard
+            router.push('/05_home/afterstore'); // ✅ redirect ke halaman store setelah sukses
         } catch (err) {
+            console.error('❌ Error creating store:', err);
             toast.error('Failed to create store');
-            console.error(err);
         } finally {
             setIsPending(false);
         }
     };
 
-    return { ...form, handleSubmit: form.handleSubmit, onSubmit, isPending };
+    return {
+        ...form,
+        handleSubmit: form.handleSubmit,
+        onSubmit,
+        isPending
+    };
 }

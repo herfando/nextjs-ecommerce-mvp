@@ -40,13 +40,13 @@ const NavAuthSection = () => {
           onClick={() => console.log('Go to Store Management')}
         >
           <Store className="w-4 h-4 text-gray-700" />
-          <span className='font-semibold'>Toko Barokah Jaya</span>
+          <span className='font-semibold'>{user?.storeName || 'Your Store'}</span>
         </Button>
         
         {/* Avatar/Profil */}
         <Button variant="ghost" className="p-0 h-auto" onClick={() => console.log('Go to Profile')}>
             <Avatar className="w-8 h-8">
-                <AvatarImage src="/placeholder-avatar.jpg" alt="Profile" />
+                <AvatarImage src={user?.avatar || "/placeholder-avatar.jpg"} alt="Profile" />
                 <AvatarFallback className="bg-black text-white text-sm">
                     {userInitials} 
                 </AvatarFallback>
