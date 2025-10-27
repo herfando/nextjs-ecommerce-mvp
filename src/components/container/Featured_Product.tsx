@@ -1,66 +1,19 @@
-"use client";
+'use client';
 
 import Image from "next/image";
 import { Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useQuery } from "@tanstack/react-query";
-
-// -------------------- Types --------------------
-interface Product {
-  id: number;
-  img: string;
-  title: string;
-  price: string;
-  rating: string;
-  sold: string;
-  store: string;
-  category?: string;
-  description?: string;
-}
-
-interface ApiProduct {
-  id: number;
-  title: string;
-  price: number;
-  thumbnail: string;
-  category: string;
-  description: string;
-  rating: number;
-  stock: number;
-}
-
-// -------------------- Fetch Semua Produk --------------------
-const fetchAllProducts = async (): Promise<Product[]> => {
-  const res = await fetch("https://dummyjson.com/products?limit=0");
-  const data = await res.json();
-
-  return data.products.map((p: ApiProduct) => ({
-    id: p.id,
-    img: p.thumbnail,
-    title: p.title,
-    price: `$${p.price.toFixed(2)}`,
-    rating: p.rating.toFixed(1),
-    sold: `${p.stock} sold`,
-    store: "Global Market",
-    category: p.category,
-    description: p.description,
-  }));
-};
+import { useProducts } from "@/hooks/useProducts"; // ✅ pakai hook baru
 
 // -------------------- Component --------------------
 export default function FeaturedProduct() {
-  const { data: products = [], isLoading } = useQuery({
-    queryKey: ["all-products"],
-    queryFn: fetchAllProducts,
-    staleTime: 1000 * 60 * 10,
-  });
-
+  const { data: products = [], isLoading } = useProducts(); // ✅ ambil data dari hook
   const [visibleCount, setVisibleCount] = useState(16);
-  const [displayed, setDisplayed] = useState<Product[]>([]);
+  const [displayed, setDisplayed] = useState(products);
   const [fadeKey, setFadeKey] = useState(0); // untuk trigger re-render animasi
 
-  // Shuffle & auto update setiap 3 detik
+  // Shuffle & auto update setiap 6 detik
   useEffect(() => {
     if (!products.length) return;
 
@@ -70,7 +23,7 @@ export default function FeaturedProduct() {
       setFadeKey((k) => k + 1); // ubah key untuk trigger animasi fade
     };
 
-    updateProducts(); // panggil pertama kali
+    updateProducts();
     const interval = setInterval(updateProducts, 6000);
 
     return () => clearInterval(interval);
@@ -136,7 +89,7 @@ const fadeIn = `
 `;
 
 // -------------------- Product Card --------------------
-const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
+const ProductCard: React.FC<{ product: any }> = ({ product }) => (
   <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
       <Image

@@ -1,36 +1,46 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Product = {
-  img: string;
+  id: number;
   title: string;
-  price: string;
-  rating: string;
+  price: number;
+  rating: number;
+  thumbnail: string;
 };
 
-const products: Product[] = [
-  { img: "/product1.png", title: "Sneakers Court Minimalis", price: "Rp275.000", rating: "4.9" },
-  { img: "/product2.png", title: "Kaos Crewneck Esensial", price: "Rp800.000", rating: "4.8" },
-  { img: "/product3.png", title: "Tas Selempang Klasik", price: "Rp1.600.000", rating: "4.7" },
-  { img: "/product4.png", title: "Kaos Soft Touch", price: "Rp650.000", rating: "4.6" },
-  { img: "/product5.png", title: "Overshirt Utility", price: "Rp375.000", rating: "4.5" },
-  { img: "/product6.png", title: "Sweater Rajut Cable", price: "Rp1.300.000", rating: "4.8" },
-  { img: "/product7.png", title: "Syal Wol Kotak", price: "Rp220.000", rating: "4.9" },
-  { img: "/product8.png", title: "Syal Wol Solid", price: "Rp180.000", rating: "4.7" },
-  { img: "/product9.png", title: "Celana Panjang Tailored", price: "Rp2.200.000", rating: "4.8" },
-  { img: "/product10.png", title: "Sneakers Harian", price: "Rp1.900.000", rating: "4.9" },
-  { img: "/product11.png", title: "Jaket Puffer Quilted", price: "Rp450.000", rating: "4.6" },
-  { img: "/product12.png", title: "Kemeja Oxford", price: "Rp950.000", rating: "4.8" },
-  { img: "/product13.png", title: "Celana Pendek Chino", price: "Rp120.000", rating: "4.5" },
-  { img: "/product14.png", title: "Topi Baseball 6-Panel", price: "Rp320.000", rating: "4.7" },
-  { img: "/product15.png", title: "Kaos Katun Premium", price: "Rp1.100.000", rating: "4.9" },
-  { img: "/product16.png", title: "Hoodie Pullover Fleece", price: "Rp275.000", rating: "4.8" },
-];
-
 const Catalog = () => {
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>(products);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  // Fetch data dari DummyJSON
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const res = await fetch("https://dummyjson.com/products?limit=16");
+        const data = await res.json();
+        setProducts(data.products);
+        setFilteredProducts(data.products);
+      } catch (err) {
+        console.error("Failed to fetch products:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p className="text-gray-600">Loading products...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -106,20 +116,22 @@ const Catalog = () => {
           </div>
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-            {filteredProducts.map((product, idx) => (
-              <article key={idx} className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition">
+            {filteredProducts.map((product) => (
+              <article key={product.id} className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition">
                 <div className="relative w-full h-72">
                   <Image
-                    src={product.img}
+                    src={product.thumbnail}
                     alt={product.title}
                     fill
-                    style={{ objectFit: 'cover' }}
+                    style={{ objectFit: "cover" }}
                     className="rounded-t-xl"
                   />
                 </div>
                 <div className="px-2 py-2">
                   <h4 className="line-clamp-1 text-sm">{product.title}</h4>
-                  <data className="block text-sm font-bold">{product.price}</data>
+                  <data className="block text-sm font-bold">
+                    Rp{product.price.toLocaleString("id-ID")}
+                  </data>
                   <div className="flex items-center gap-1 text-sm">
                     <Image src="/rating.png" alt="rating star" width={17} height={16} />
                     <span>{product.rating}</span>

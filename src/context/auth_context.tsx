@@ -8,6 +8,7 @@ export interface User {
   hasStore?: boolean;
   storeName?: string | null;
   username?: string;
+  avatar?: string; 
 }
 
 interface AuthContextType {
