@@ -36,10 +36,10 @@ const NavAuthSection = () => {
     return (
       <div className="flex items-center">
         {/* Tombol Toko Barokah Jaya (Open Store) */}
-        <Link href="/buyer/open_store">
+        <Link href="/03_open_store">
         <Button 
           variant="ghost" 
-          className="hover:cursor-pointer hover:bg-black flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:text-white transition-colors"
+          className="cursor-pointer hover:cursor-pointer hover:bg-black flex items-center gap-3 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:text-white transition-colors"
           onClick={() => console.log('Go to Store Management')}
         >
           <Store className="w-4 h-4 text-gray-700" />
@@ -63,10 +63,10 @@ const NavAuthSection = () => {
  
   return (
     <div className="flex items-center gap-2">
-      <Button variant="ghost" onClick={() => router.push('/auth/login')} className="text-sm px-3 py-2 h-10">
+      <Button variant="ghost" onClick={() => router.push('/01_login')} className="text-sm px-3 py-2 h-10">
         Login
       </Button>
-      <Button onClick={() => router.push('/auth/register')} className="text-sm px-3 py-2 h-10 bg-black hover:bg-gray-800">
+      <Button onClick={() => router.push('/02_register')} className="cursor-pointer text-sm px-3 py-2 h-10 bg-black hover:bg-gray-800">
         Register
       </Button>
     </div>

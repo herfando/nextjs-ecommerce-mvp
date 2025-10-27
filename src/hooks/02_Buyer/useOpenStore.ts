@@ -1,73 +1,75 @@
-// src/hooks/02_Buyer/useOpenStore.ts (REVISI LENGKAP)
+// src/hooks/02_Buyer/useOpenStore.ts
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { storeSchema, StoreFormValues } from "@/lib/validations/open_store_validations";
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 import { useAuth } from '@/lib/context/auth_context';
+import { useState } from 'react';
 
-// 🔥 SIMULASI API Daftar Toko
-const simulateStoreRegistration = async (data: StoreFormValues) => {
-    // Simulasi penundaan 1.5 detik
-    await new Promise(resolve => setTimeout(resolve, 1500));
+const storeSchema = z.object({
+    storeName: z.string().min(3, 'Store name is required'),
+    storeDomain: z.string().optional(),
+    city: z.string().optional(),
+    postalCode: z.string().optional(),
+    address: z.string().optional(),
+});
 
-    // Asumsi sukses, return nama toko untuk disimpan
-    return {
-        success: true,
-        storeName: data.storeName,
-        message: 'Toko Anda berhasil didaftarkan!',
-    };
-};
+export type StoreFormData = z.infer<typeof storeSchema>;
 
-// Hook custom untuk form OpenStore
-export const useOpenStore = () => {
-    const router = useRouter();
-    // ✅ Dapatkan updateStore dari AuthContext
-    const { updateStore } = useAuth();
-
-    const form = useForm<StoreFormValues>({
+export function useOpenStore() {
+    const form = useForm<StoreFormData>({
         resolver: zodResolver(storeSchema),
         defaultValues: {
-            storeName: "",
-            storeDomain: "",
-            city: "",
-            postalCode: "",
-            address: "",
-        },
-        mode: "onBlur",
-        reValidateMode: "onChange",
-    });
-
-    // 🔹 Setup Mutasi
-    const storeMutation = useMutation({
-        mutationFn: simulateStoreRegistration,
-        onSuccess: (data) => {
-            toast.success(data.message);
-
-            // ✅ KONEKSI: Panggil updateStore
-            updateStore(data.storeName);
-
-            form.reset();
-
-            // ✅ Arahkan ke / (Home)
-            router.push('/');
-        },
-        onError: (error: any) => {
-            toast.error('Gagal mendaftarkan toko, coba lagi.');
-            console.error(error);
+            storeName: '',
+            storeDomain: '',
+            city: '',
+            postalCode: '',
+            address: '',
         },
     });
 
-    // 🔹 Submit Handler yang akan dipanggil dari OpenStore.tsx
-    const onSubmit = (values: StoreFormValues) => {
-        storeMutation.mutate(values);
+    const { user, setUser } = useAuth();
+    const [isPending, setIsPending] = useState(false);
+    const router = useRouter();
+
+    const onSubmit = async (data: StoreFormData) => {
+        try {
+            setIsPending(true);
+
+            // 🔹 Simulasi create store pakai DummyJSON
+            const res = await fetch('https://dummyjson.com/users/add', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    firstName: data.storeName,
+                    lastName: 'Store',
+                    image: `https://robohash.org/${data.storeName}.png`,
+                    address: data.address,
+                }),
+            });
+
+            const apiData = await res.json();
+
+            // 🔹 Update context user agar Navbar berubah
+            setUser({
+                ...user!,
+                hasStore: true,
+                storeName: data.storeName,
+                avatar: apiData.image, // pakai avatar dari dummyjson
+            });
+
+            toast.success('Store created successfully!');
+            router.push('/05_home'); // atau ke dashboard
+        } catch (err) {
+            toast.error('Failed to create store');
+            console.error(err);
+        } finally {
+            setIsPending(false);
+        }
     };
 
-    return {
-        ...form,
-        onSubmit, // Submit handler yang baru
-        isPending: storeMutation.isPending, // State loading
-    };
-};
+    return { ...form, handleSubmit: form.handleSubmit, onSubmit, isPending };
+}

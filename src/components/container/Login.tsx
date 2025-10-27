@@ -18,7 +18,7 @@ import { Eye, EyeOff } from 'lucide-react';
 const LOGO_PATH = '/Vector.png';
 const LOGO_SIZE = 24;
 
-export default function Login() {  // ✅ Tetap Login
+export default function Login() {
   const router = useRouter();
   const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
@@ -32,25 +32,23 @@ export default function Login() {  // ✅ Tetap Login
   });
 
   const onSubmit = (data: TLoginSchema) => {
-    // langsung login tanpa API
-    const userData = {
-      id: Date.now().toString(),
-      username: data.username,
-      email: '',
-      hasStore: false,
-      storeName: null,
-    };
-    login(userData);
-    toast.success('Login berhasil 🎉');
-    form.reset();
-    router.push('/05_home'); // Navbar otomatis berubah ke before store
+  const userData = {
+    id: Date.now().toString(),
+    username: data.username,
+    email: '',
+    hasStore: false,
+    storeName: null,
   };
+  login(userData); // login ini akan set isManualLogin = true
+  toast.success('Login berhasil 🎉');
+  form.reset();
+  router.push('/05_home/beforestore'); // client-side redirect
+};
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
       <Card className="w-full max-w-sm rounded-xl shadow-lg border-none bg-white">
         <CardContent className="p-8">
-
           <div className="flex items-center mb-6">
             <Image 
               src={LOGO_PATH} 
