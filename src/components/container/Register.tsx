@@ -3,12 +3,9 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { registerSchema, TRegisterSchema } from '@/lib/validations/auth_validations'; 
-import api from '@/lib/api/apiClient';
-import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useAuth } from '@/lib/context/auth_context'; // ✅ Import useAuth
 
 // Shadcn UI
 import { Input } from '@/components/ui/input';
@@ -20,15 +17,11 @@ import Image from 'next/image';
 const LOGO_PATH = '/Vector.png'; 
 const LOGO_SIZE = 24;
 
-// 🔥 Karena dummyjson tidak ada endpoint register, kita buat simulasi.
-// Di dunia nyata, Anda akan menggunakan endpoint /auth/register
-export default function RegisterForm() {
+export default function Register() {
     const router = useRouter();
-    const { login } = useAuth(); // ✅ Ambil fungsi login untuk simulasi
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
 
-    // 🔹 Setup form dengan zodResolver
     const form = useForm<TRegisterSchema>({
         resolver: zodResolver(registerSchema),
         defaultValues: {
@@ -40,35 +33,13 @@ export default function RegisterForm() {
         },
     });
 
-    // 🔥 useMutation untuk SIMULASI Register
-    const registerMutation = useMutation({
-        // ✅ Karena tidak ada endpoint register, kita simulasikan dengan delay dan sukses
-        mutationFn: async (data: TRegisterSchema) => {
-            // SIMULASI API CALL: Tunggu 1 detik
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            
-            // SIMULASI SUKSES: Di aplikasi nyata, ini adalah res.data dari /auth/register
-            return { success: true }; 
-        },
-        onSuccess: (data) => {
-            toast.success('Pendaftaran berhasil! Silakan Login dengan akun yang Anda daftarkan.');
-            form.reset();
-            // ✅ Setelah berhasil register, arahkan ke halaman login
-            router.push('/01_login'); 
-        },
-        onError: (error: any) => {
-            // Simulasi error jika diperlukan
-            toast.error('Pendaftaran gagal, coba lagi.');
-            console.error(error);
-        },
-    });
-
-    // 🔹 Submit handler
     const onSubmit = (data: TRegisterSchema) => {
-        registerMutation.mutate(data);
+        // Simulasi register sukses
+        toast.success('Register berhasil! Silakan login 🎉');
+        form.reset();
+        router.push('/01_login'); // 🔹 arahkan ke halaman login
     };
 
-    // ... (Bagian formFields & getInputField tetap sama)
     const formFields: Array<{ name: keyof TRegisterSchema, type: string, placeholder: string }> = [
         { name: 'name', type: 'text', placeholder: 'Name' },
         { name: 'phone', type: 'tel', placeholder: 'Number Phone' },
@@ -100,15 +71,10 @@ export default function RegisterForm() {
                             className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600"
                             aria-label={`Toggle visibility of ${field.placeholder}`}
                         >
-                            {isVisible ? (
-                                <EyeOff className="h-5 w-5" />
-                            ) : (
-                                <Eye className="h-5 w-5" />
-                            )}
+                            {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                         </button>
                     )}
                 </div>
-                {/* Error Text Helper */}
                 {form.formState.errors[field.name] && (
                     <p className="text-red-500 text-xs mt-1">
                         {form.formState.errors[field.name]?.message}
@@ -118,13 +84,10 @@ export default function RegisterForm() {
         );
     };
 
-
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-50 p-4">
             <Card className="w-full max-w-sm rounded-xl shadow-lg border-none bg-white">
                 <CardContent className="p-8">
-                    
-                    {/* Logo dan Judul */}
                     <div className="flex items-center mb-6">
                         <div className="mr-2">
                             <Image
@@ -142,25 +105,20 @@ export default function RegisterForm() {
                         Just a few steps away from your next favorite purchase
                     </p>
 
-                    {/* Form */}
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
                         className="flex flex-col gap-4"
                     >
-                        {/* Render semua fields */}
                         {formFields.map(field => getInputField(field))}
 
-                        {/* Submit Button */}
                         <Button
                             type="submit"
-                            disabled={registerMutation.isPending}
                             className="w-full mt-2 h-11 bg-black text-white hover:bg-gray-800 rounded-lg text-base font-medium"
                         >
-                            {registerMutation.isPending ? 'Loading...' : 'Submit'}
+                            Submit
                         </Button>
                     </form>
 
-                    {/* Teks "Already have an account? Log In" */}
                     <div className="mt-6 text-center text-sm text-gray-500">
                         Already have an account?{' '}
                         <button
