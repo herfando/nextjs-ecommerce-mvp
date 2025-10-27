@@ -159,7 +159,7 @@ export default function LoginForm() {
                         Don't have an account?{' '}
                         <button
                             onClick={() => router.push('/02_register')} 
-                            className="font-semibold text-black hover:text-gray-800"
+                            className="cursor-pointer font-semibold text-black hover:text-gray-800"
                         >
                             Register
                         </button>

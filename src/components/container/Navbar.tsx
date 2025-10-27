@@ -22,20 +22,9 @@ export interface User {
 // 🔹 Komponen Navbar utama (gabungan dari 3 kondisi)
 // -----------------------------------------------------------
 export default function Navbar() {
-  const { user, isLoading } = useAuth() as { user: User | null; isLoading: boolean };
+  const { user, isManualLogin } = useAuth();
 
-  if (isLoading) {
-    return (
-      <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
-          <span className="text-lg font-semibold">Loading...</span>
-          <Loader2 className="w-6 h-6 animate-spin text-gray-400" />
-        </div>
-      </nav>
-    );
-  }
-
-  if (!user) return <NavbarBeforeLogin />;
+  if (!user || !isManualLogin) return <NavbarBeforeLogin />;
   if (user && !user.hasStore) return <NavbarBeforeStore />;
   if (user && user.hasStore) return <NavbarAfterStore />;
 
@@ -98,15 +87,15 @@ function NavbarBeforeLogin() {
 
           <Button
             variant="outline"
-            onClick={() => router.push("/auth/login")}
-            className="text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white"
+            onClick={() => router.push("/01_login")}
+            className="cursor-pointer text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white"
           >
             Login
           </Button>
           <Button
             variant="outline"
-            onClick={() => router.push("/auth/register")}
-            className="text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white"
+            onClick={() => router.push("/02_register")}
+            className="cursor-pointer text-sm px-5 py-2 h-10 font-semibold border-gray-300 hover:bg-black hover:text-white"
           >
             Register
           </Button>
