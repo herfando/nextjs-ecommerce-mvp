@@ -1,37 +1,11 @@
 "use client";
-import { useState } from "react";
-
-type CartItem = {
-  id: number;
-  name: string;
-  price: number;
-  quantity: number;
-  category: string;
-  image: string;
-};
-
-const initialCart: CartItem[] = [
-  { id: 1, name: "Sneakers Court Minimalis", price: 275000, quantity: 2, category: "Shoes", image: "/shoes.png" },
-  { id: 2, name: "Kaos Katun Premium", price: 1100000, quantity: 2, category: "T-Shirt", image: "/tshirt.png" },
-  { id: 3, name: "Topi Baseball 6-Panel", price: 320000, quantity: 2, category: "Accessories", image: "/topi.png" },
-  { id: 4, name: "Celana Panjang Tailored", price: 2200000, quantity: 2, category: "Trousers", image: "/trouser.png" },
-  { id: 5, name: "Hoodie Pullover Fleece", price: 275000, quantity: 2, category: "Jacket", image: "/hoodie.png" },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { increase, decrease, removeItem } from "@/redux/cartSlice";
 
 export default function Cart() {
-  const [cart, setCart] = useState<CartItem[]>(initialCart);
-
-  const increase = (id: number) => {
-    setCart(prev => prev.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
-  };
-
-  const decrease = (id: number) => {
-    setCart(prev => prev.map(item => item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item));
-  };
-
-  const removeItem = (id: number) => {
-    setCart(prev => prev.filter(item => item.id !== id));
-  };
+  const cart = useSelector((state: RootState) => state.cart.items);
+  const dispatch = useDispatch();
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
@@ -59,13 +33,13 @@ export default function Cart() {
                 </div>
 
                 <div className="flex items-center space-x-4">
-                  <p className="font-bold text-gray-600 w-24 text-right">Rp{item.price.toLocaleString()}</p>
+                  <p className="font-bold text-gray-600 w-24 text-right">${item.price.toFixed(2)}</p>
                   <div className="flex items-center border border-gray-300 rounded-md">
-                    <button onClick={() => decrease(item.id)} className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-md">-</button>
+                    <button onClick={() => dispatch(decrease(item.id))} className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-l-md">-</button>
                     <span className="px-3 py-1 border-l border-r border-gray-300">{item.quantity}</span>
-                    <button onClick={() => increase(item.id)} className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-md">+</button>
+                    <button onClick={() => dispatch(increase(item.id))} className="px-3 py-1 text-gray-600 hover:bg-gray-100 rounded-r-md">+</button>
                   </div>
-                  <button onClick={() => removeItem(item.id)} className="text-gray-400 hover:text-red-500">
+                  <button onClick={() => dispatch(removeItem(item.id))} className="text-gray-400 hover:text-red-500">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>
@@ -81,7 +55,7 @@ export default function Cart() {
           <h2 className="text-xl font-bold text-gray-600 mb-4">Total Shopping</h2>
           <div className="flex justify-between items-center mb-6">
             <span className="text-gray-700">Total</span>
-            <span className="font-bold text-xl text-gray-600">Rp{totalPrice.toLocaleString()}</span>
+            <span className="font-bold text-xl text-gray-600">${totalPrice.toFixed(2)}</span>
           </div>
           <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition duration-300">
             Checkout
