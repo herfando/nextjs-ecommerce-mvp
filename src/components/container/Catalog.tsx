@@ -1,21 +1,32 @@
 'use client';
 
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { fetchProducts } from "@/redux/productSlice";
+import { useEffect } from "react";
 
 export default function Catalog() {
-  const products = useSelector((state: RootState) => state.products.items);
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
-  // 🔥 Filter products by query
-  const filteredProducts = query
-    ? products.filter(p =>
-        p.title.toLowerCase().includes(query.toLowerCase())
-      )
-    : products;
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
 
-  if (!products.length) {
+  // 🟢 FIX: pencarian + urutan abjad A–Z tanpa peduli huruf besar
+  const filteredProducts = [...products]
+    .filter((p) =>
+      p.title.toLowerCase().includes(query.toLowerCase())
+    )
+    .sort((a, b) =>
+      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+    );
+
+  if (isLoading || !products.length) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <p className="text-gray-600">Loading products...</p>
@@ -28,9 +39,7 @@ export default function Catalog() {
       <h1 className="font-bold text-3xl mb-6">Catalog</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Sidebar Filter */}
         <aside className="hidden lg:block border border-gray-300 rounded-xl col-span-1 py-4 divide-y divide-gray-300 bg-white">
-          {/* Categories */}
           <div className="px-4 flex flex-col py-2.5 gap-2.5">
             <h2 className="font-bold text-lg">FILTER</h2>
             <h3 className="font-semibold text-md">Categories</h3>
@@ -47,10 +56,9 @@ export default function Catalog() {
           </div>
         </aside>
 
-        {/* Product Grid */}
         <section className="col-span-3 space-y-6">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-            {filteredProducts.map(product => (
+            {filteredProducts.map((product) => (
               <article key={product.id} className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition">
                 <div className="relative w-full h-72">
                   <Image

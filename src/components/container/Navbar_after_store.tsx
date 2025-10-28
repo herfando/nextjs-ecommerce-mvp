@@ -9,14 +9,19 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 
-// Bagian yang melakukan Conditional Rendering
+// 🔥 Redux import
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '@/redux/store';
+import { setQuery } from '@/redux/searchSlice';
+
+// =============================
+// 🔹 Bagian Conditional Rendering (Auth)
+// =============================
 const NavAuthSection = () => {
-  // ✅ useAuth sekarang mengembalikan isLoading
   const { user, logout, isLoading } = useAuth(); 
   const router = useRouter();
 
   if (isLoading) {
-    // Tampilkan Spinner/Placeholder saat isLoading
     return (
       <div className="flex items-center gap-4">
         <div className="w-[100px] h-10 bg-gray-100 animate-pulse rounded-lg"></div>
@@ -33,7 +38,7 @@ const NavAuthSection = () => {
     // KONDISI: User Sudah Login
     return (
       <div className="flex items-center gap-4">
-        {/* Tombol Toko Barokah Jaya (Open Store) */}
+        {/* Tombol Store */}
         <Button 
           variant="ghost" 
           className="flex items-center gap-1.5 px-3 py-2 h-10 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
@@ -43,7 +48,7 @@ const NavAuthSection = () => {
           <span className='font-semibold'>{user?.storeName || 'Your Store'}</span>
         </Button>
         
-        {/* Avatar/Profil */}
+        {/* Avatar */}
         <Button variant="ghost" className="p-0 h-auto" onClick={() => console.log('Go to Profile')}>
             <Avatar className="w-8 h-8">
                 <AvatarImage src={user?.avatar || "/placeholder-avatar.jpg"} alt="Profile" />
@@ -69,8 +74,27 @@ const NavAuthSection = () => {
   );
 };
 
-
+// =============================
+// 🔹 NAVBAR SETELAH STORE (Redux Search)
+// =============================
 export default function NavbarAfterStore() {
+  const router = useRouter();
+
+  // 🔥 Redux Search
+  const dispatch = useDispatch<AppDispatch>();
+  const query = useSelector((state: RootState) => state.search.query);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setQuery(e.target.value));
+  };
+
+  const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (query.trim()) {
+      router.push(`/08_catalog?search=${encodeURIComponent(query)}`);
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
@@ -93,21 +117,24 @@ export default function NavbarAfterStore() {
             </Button>
             </Link>
 
-            {/* Search Form */}
-            <div className="relative w-[300px] h-10 hidden md:block">
+            {/* 🔥 Redux Search Form */}
+            <form onSubmit={handleSearchSubmit} className="relative w-[300px] h-10 hidden md:block">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input 
-                    placeholder="Search..." 
-                    className="h-10 pl-9 pr-3 rounded-xl border border-gray-300 focus-visible:ring-black" 
+                    type="text"
+                    name="search_query"
+                    placeholder="Search..."
+                    value={query}
+                    onChange={handleSearchChange}
+                    className="h-10 pl-9 pr-3 rounded-xl border border-gray-300 focus-visible:ring-black focus-visible:ring-offset-0 transition-shadow" 
                 />
-            </div>
+            </form>
         </div>
 
-        {/* Profile & Cart (Conditional Rendering Here) */}
+        {/* Profile & Cart */}
         <div className="flex items-center gap-4">
           <Link href="/shoppingcart" className="relative transition-all duration-300 hover:scale-105">
             <ShoppingCart className="w-6 h-6 text-gray-700" />
-            {/* Cart Notification */}
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">6</span>
           </Link>
           
