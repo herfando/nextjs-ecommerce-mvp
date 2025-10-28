@@ -10,7 +10,7 @@ import { fetchProducts } from "@/redux/productSlice";
 
 export default function FeaturedProduct() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items: products, loading } = useSelector((state: RootState) => state.products);
+  const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
   const [visibleCount, setVisibleCount] = useState(16);
@@ -23,25 +23,30 @@ export default function FeaturedProduct() {
     }
   }, [dispatch, products.length]);
 
+  // 🟢 FIX: pencarian + urutan abjad case-insensitive agar stabil
   useEffect(() => {
     if (!products.length) return;
 
+    let updated = [...products];
+
     if (query.trim()) {
-      const filtered = products.filter(p =>
+      updated = updated.filter((p) =>
         p.title.toLowerCase().includes(query.toLowerCase())
       );
-      setDisplayed(filtered);
-    } else {
-      const shuffled = shuffleArray(products);
-      setDisplayed(shuffled);
     }
 
-    setFadeKey(k => k + 1);
+    // urutkan A–Z tanpa peduli huruf besar/kecil
+    updated.sort((a, b) =>
+      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+    );
+
+    setDisplayed(updated);
+    setFadeKey((k) => k + 1);
   }, [products, query]);
 
-  const handleLoadMore = () => setVisibleCount(prev => prev + 16);
+  const handleLoadMore = () => setVisibleCount((prev) => prev + 16);
 
-  if (loading || !products.length) {
+  if (isLoading || !products.length) {
     return (
       <div className="text-center text-lg py-10 font-medium">
         Loading featured products...
@@ -56,7 +61,7 @@ export default function FeaturedProduct() {
         key={fadeKey}
         className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto animate-fadeIn"
       >
-        {displayed.slice(0, visibleCount).map(product => (
+        {displayed.slice(0, visibleCount).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
@@ -73,15 +78,6 @@ export default function FeaturedProduct() {
       )}
     </div>
   );
-}
-
-function shuffleArray<T>(array: T[]): T[] {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-  }
-  return shuffled;
 }
 
 const ProductCard: React.FC<{ product: any }> = ({ product }) => (

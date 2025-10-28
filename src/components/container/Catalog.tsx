@@ -8,7 +8,7 @@ import { useEffect } from "react";
 
 export default function Catalog() {
   const dispatch = useDispatch<AppDispatch>();
-  const { items: products, loading } = useSelector((state: RootState) => state.products);
+  const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
   useEffect(() => {
@@ -17,13 +17,16 @@ export default function Catalog() {
     }
   }, [dispatch, products.length]);
 
-  const filteredProducts = query
-    ? products.filter(p =>
-        p.title.toLowerCase().includes(query.toLowerCase())
-      )
-    : products;
+  // 🟢 FIX: pencarian + urutan abjad A–Z tanpa peduli huruf besar
+  const filteredProducts = [...products]
+    .filter((p) =>
+      p.title.toLowerCase().includes(query.toLowerCase())
+    )
+    .sort((a, b) =>
+      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
+    );
 
-  if (loading || !products.length) {
+  if (isLoading || !products.length) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <p className="text-gray-600">Loading products...</p>
@@ -55,7 +58,7 @@ export default function Catalog() {
 
         <section className="col-span-3 space-y-6">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
-            {filteredProducts.map(product => (
+            {filteredProducts.map((product) => (
               <article key={product.id} className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition">
                 <div className="relative w-full h-72">
                   <Image
