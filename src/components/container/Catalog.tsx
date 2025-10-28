@@ -1,21 +1,29 @@
 'use client';
 
 import Image from "next/image";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { fetchProducts } from "@/redux/productSlice";
+import { useEffect } from "react";
 
 export default function Catalog() {
-  const products = useSelector((state: RootState) => state.products.items);
+  const dispatch = useDispatch<AppDispatch>();
+  const { items: products, loading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
-  // 🔥 Filter products by query
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
+
   const filteredProducts = query
     ? products.filter(p =>
         p.title.toLowerCase().includes(query.toLowerCase())
       )
     : products;
 
-  if (!products.length) {
+  if (loading || !products.length) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <p className="text-gray-600">Loading products...</p>
@@ -28,9 +36,7 @@ export default function Catalog() {
       <h1 className="font-bold text-3xl mb-6">Catalog</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Sidebar Filter */}
         <aside className="hidden lg:block border border-gray-300 rounded-xl col-span-1 py-4 divide-y divide-gray-300 bg-white">
-          {/* Categories */}
           <div className="px-4 flex flex-col py-2.5 gap-2.5">
             <h2 className="font-bold text-lg">FILTER</h2>
             <h3 className="font-semibold text-md">Categories</h3>
@@ -47,7 +53,6 @@ export default function Catalog() {
           </div>
         </aside>
 
-        {/* Product Grid */}
         <section className="col-span-3 space-y-6">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map(product => (

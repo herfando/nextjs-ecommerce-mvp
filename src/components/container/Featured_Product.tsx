@@ -6,18 +6,23 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
-import { setProducts } from "@/redux/productSlice"; // Product slice
+import { fetchProducts } from "@/redux/productSlice";
 
 export default function FeaturedProduct() {
   const dispatch = useDispatch<AppDispatch>();
-  const products = useSelector((state: RootState) => state.products.items);
+  const { items: products, loading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
   const [visibleCount, setVisibleCount] = useState(16);
   const [displayed, setDisplayed] = useState(products);
   const [fadeKey, setFadeKey] = useState(0);
 
-  // 🔥 Filter products by query
+  useEffect(() => {
+    if (!products.length) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products.length]);
+
   useEffect(() => {
     if (!products.length) return;
 
@@ -36,7 +41,7 @@ export default function FeaturedProduct() {
 
   const handleLoadMore = () => setVisibleCount(prev => prev + 16);
 
-  if (!products.length) {
+  if (loading || !products.length) {
     return (
       <div className="text-center text-lg py-10 font-medium">
         Loading featured products...
@@ -70,7 +75,6 @@ export default function FeaturedProduct() {
   );
 }
 
-// -------------------- Shuffle Helper --------------------
 function shuffleArray<T>(array: T[]): T[] {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
@@ -80,7 +84,6 @@ function shuffleArray<T>(array: T[]): T[] {
   return shuffled;
 }
 
-// -------------------- Product Card --------------------
 const ProductCard: React.FC<{ product: any }> = ({ product }) => (
   <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
@@ -106,7 +109,6 @@ const ProductCard: React.FC<{ product: any }> = ({ product }) => (
   </div>
 );
 
-// Inject CSS animasi ke halaman
 if (typeof document !== "undefined") {
   const style = document.createElement("style");
   style.innerHTML = `
