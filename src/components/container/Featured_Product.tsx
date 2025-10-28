@@ -4,39 +4,39 @@ import Image from "next/image";
 import { Star } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { useProducts } from "@/hooks/useProducts";
-import { useSearch } from "@/context/search_context"; // 🔥 TAMBAHAN
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { setProducts } from "@/redux/productSlice"; // Product slice
 
-// -------------------- Component --------------------
 export default function FeaturedProduct() {
-  const { data: products = [], isLoading } = useProducts();
-  const { filteredProducts, query } = useSearch(); // 🔥 TAMBAHAN
+  const dispatch = useDispatch<AppDispatch>();
+  const products = useSelector((state: RootState) => state.products.items);
+  const query = useSelector((state: RootState) => state.search.query);
 
   const [visibleCount, setVisibleCount] = useState(16);
   const [displayed, setDisplayed] = useState(products);
   const [fadeKey, setFadeKey] = useState(0);
 
-  // 🔥 Ganti efek ini agar ikut query dari search
+  // 🔥 Filter products by query
   useEffect(() => {
     if (!products.length) return;
 
-    // kalau ada query dari navbar → pakai hasil filter global
     if (query.trim()) {
-      setDisplayed(filteredProducts);
+      const filtered = products.filter(p =>
+        p.title.toLowerCase().includes(query.toLowerCase())
+      );
+      setDisplayed(filtered);
     } else {
-      // kalau tidak ada query → tampilkan produk acak seperti sebelumnya
       const shuffled = shuffleArray(products);
       setDisplayed(shuffled);
     }
 
-    setFadeKey((k) => k + 1);
-  }, [products, filteredProducts, query]); // 🔥 TAMBAHAN dependency
+    setFadeKey(k => k + 1);
+  }, [products, query]);
 
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + 16);
-  };
+  const handleLoadMore = () => setVisibleCount(prev => prev + 16);
 
-  if (isLoading) {
+  if (!products.length) {
     return (
       <div className="text-center text-lg py-10 font-medium">
         Loading featured products...
@@ -51,8 +51,7 @@ export default function FeaturedProduct() {
         key={fadeKey}
         className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto animate-fadeIn"
       >
-        {/* 🔥 tampilkan displayed yang sudah diproses (acak / hasil search) */}
-        {displayed.slice(0, visibleCount).map((product) => (
+        {displayed.slice(0, visibleCount).map(product => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
@@ -80,17 +79,6 @@ function shuffleArray<T>(array: T[]): T[] {
   }
   return shuffled;
 }
-
-// -------------------- Animasi FadeIn --------------------
-const fadeIn = `
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.98); }
-  to { opacity: 1; transform: scale(1); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.8s ease-in-out;
-}
-`;
 
 // -------------------- Product Card --------------------
 const ProductCard: React.FC<{ product: any }> = ({ product }) => (
@@ -121,6 +109,12 @@ const ProductCard: React.FC<{ product: any }> = ({ product }) => (
 // Inject CSS animasi ke halaman
 if (typeof document !== "undefined") {
   const style = document.createElement("style");
-  style.innerHTML = fadeIn;
+  style.innerHTML = `
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.98); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    .animate-fadeIn { animation: fadeIn 0.8s ease-in-out; }
+  `;
   document.head.appendChild(style);
 }
