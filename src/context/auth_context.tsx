@@ -9,6 +9,7 @@ export interface User {
   storeName?: string | null;
   username?: string;
   avatar?: string; 
+  
 }
 
 interface AuthContextType {

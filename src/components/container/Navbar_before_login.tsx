@@ -9,11 +9,16 @@ import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
 import { setQuery } from '@/redux/searchSlice';
+import { useEffect } from 'react';
+import { fetchCartFromAPI } from '@/redux/cartSlice';
 
 export default function NavbarBeforeLogin() {
   const router = useRouter();
   const dispatch = useDispatch<AppDispatch>();
   const query = useSelector((state: RootState) => state.search.query);
+
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   // 🔥 ubah query di redux state
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +38,7 @@ export default function NavbarBeforeLogin() {
   const handleCategory = () => console.log('Go to Category Page');
 
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-md border-b border-gray-100">
+    <nav className="sticky top-0 z-50 bg-white shadow-md border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
         
         {/* Logo */}
@@ -75,11 +80,13 @@ export default function NavbarBeforeLogin() {
 
         {/* Cart & Auth Buttons */}
         <div className="flex items-center gap-4">
-          <Link href="/shoppingcart" className="relative transition-all duration-300 hover:scale-105 p-1">
-            <ShoppingCart className="w-6 h-6 text-gray-700" />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-              6
-            </span>
+          <Link href="/09_cart" className="relative transition-all duration-300 hover:scale-105">
+            <ShoppingCart className="cursor-pointer hover:fill-black w-6 h-6 text-gray-700" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
 
           <Button 

@@ -8,12 +8,13 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-
-// 🔥 Redux Import
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState, AppDispatch } from '@/redux/store';
-import { setQuery } from '@/redux/searchSlice';
+import { setQuery, fetchSearchResults } from '@/redux/searchSlice';
+import { useEffect } from 'react';
+import { fetchCartFromAPI } from '@/redux/cartSlice';
 
+// 🔹 Bagian Auth Section
 const NavAuthSection = () => {
   const { user, logout, isLoading } = useAuth(); 
   const router = useRouter();
@@ -58,25 +59,35 @@ const NavAuthSection = () => {
 
   return (
     <div className="flex items-center gap-2">
-      <Button variant="ghost" onClick={() => router.push('/01_login')} className="text-sm px-3 py-2 h-10">
+      <Button variant="ghost" onClick={() => router.push('/01_login')} className="cursor-pointer text-sm px-3 py-2 h-10 hover:bg-black bg-white hover:text-white">
         Login
       </Button>
-      <Button onClick={() => router.push('/02_register')} className="cursor-pointer text-sm px-3 py-2 h-10 bg-black hover:bg-gray-800">
+      <Button onClick={() => router.push('/02_register')} className="cursor-pointer text-sm px-3 py-2 h-10 hover:bg-black bg-white hover:text-white">
         Register
       </Button>
     </div>
   );
 };
 
+// 🔹 Navbar utama
 export default function NavbarBeforeStore() {
   const router = useRouter();
-
-  // 🔥 Redux search state
   const dispatch = useDispatch<AppDispatch>();
+
+  // Redux Search & Cart
   const query = useSelector((state: RootState) => state.search.query);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
+  // Fetch cart dari API saat pertama render
+  useEffect(() => {
+    dispatch(fetchCartFromAPI());
+  }, [dispatch]);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(setQuery(e.target.value));
+    const value = e.target.value;
+    dispatch(setQuery(value));
+    if (value.trim()) dispatch(fetchSearchResults(value));
   };
 
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -105,7 +116,6 @@ export default function NavbarBeforeStore() {
             </Button>
           </Link>
 
-          {/* 🔥 Redux Search Form */}
           <form onSubmit={handleSearchSubmit} className="relative w-[300px] h-10 hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
@@ -120,9 +130,13 @@ export default function NavbarBeforeStore() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link href="/shoppingcart" className="relative transition-all duration-300 hover:scale-105">
-            <ShoppingCart className="w-6 h-6 text-gray-700" />
-            <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">6</span>
+          <Link href="/09_cart" className="relative transition-all duration-300 hover:scale-105">
+            <ShoppingCart className="cursor-pointer hover:fill-black  w-6 h-6 text-gray-700" />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <NavAuthSection />
         </div>
