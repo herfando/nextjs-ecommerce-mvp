@@ -6,23 +6,28 @@ import { ShoppingCart, LayoutGrid, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useSearch } from '@/hooks/useSearch'; // 🔥 sudah benar, tetap dipakai
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState, AppDispatch } from '@/redux/store';
+import { setQuery } from '@/redux/searchSlice';
 
 export default function NavbarBeforeLogin() {
   const router = useRouter();
-  const { query, setQuery } = useSearch(); // 🔥 ambil state global search
+  const dispatch = useDispatch<AppDispatch>();
+  const query = useSelector((state: RootState) => state.search.query);
 
-  // 🧹 HAPUS kode yang tidak dipakai: handleSearchSubmit kosong & handleSearch lama
-  // 🔥 Ganti dengan 1 fungsi search baru
+  // 🔥 ubah query di redux state
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(setQuery(e.target.value));
+  };
+
+  // 🔥 submit langsung arahkan ke catalog
   const handleSearchSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
-      // langsung arahkan ke halaman catalog dengan query
       router.push(`/08_catalog?search=${encodeURIComponent(query)}`);
     }
   };
 
-  // Tautan navigasi lainnya tetap
   const handleLogin = () => router.push('/01_login');
   const handleRegister = () => router.push('/02_register');
   const handleCategory = () => console.log('Go to Category Page');
@@ -54,15 +59,15 @@ export default function NavbarBeforeLogin() {
             </Button>
           </Link>
 
-          {/* 🔥 Search Form sekarang konek ke state useSearch */}
+          {/* 🔥 Search Form Redux */}
           <form onSubmit={handleSearchSubmit} className="relative flex-grow h-10">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input 
               type="text"
               name="search_query"
               placeholder="Search product..."
-              value={query} // 🔥 ikuti query global
-              onChange={(e) => setQuery(e.target.value)} // 🔥 ubah query global
+              value={query}
+              onChange={handleSearchChange}
               className="w-full h-10 pl-10 pr-4 rounded-xl border border-gray-300 focus-visible:ring-black focus-visible:ring-offset-0 transition-shadow"
             />
           </form>
@@ -70,7 +75,6 @@ export default function NavbarBeforeLogin() {
 
         {/* Cart & Auth Buttons */}
         <div className="flex items-center gap-4">
-          {/* Cart Icon */}
           <Link href="/shoppingcart" className="relative transition-all duration-300 hover:scale-105 p-1">
             <ShoppingCart className="w-6 h-6 text-gray-700" />
             <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
@@ -78,7 +82,6 @@ export default function NavbarBeforeLogin() {
             </span>
           </Link>
 
-          {/* Tombol Login */}
           <Button 
             variant="outline"
             onClick={handleLogin}
@@ -87,7 +90,6 @@ export default function NavbarBeforeLogin() {
             Login
           </Button>
 
-          {/* Tombol Register */}
           <Button 
             variant="outline"
             onClick={handleRegister}
