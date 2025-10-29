@@ -1,13 +1,12 @@
-// src/redux/detailSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export interface DetailProduct {
     id: number;
     title: string;
     description: string;
-    price?: number;
+    price: number;
     thumbnail: string;
-    images?: string[];
+    images: string[];
     category: string;
     rating: number;
 }
@@ -24,13 +23,13 @@ const initialState: DetailState = {
     error: null,
 };
 
-// 🟢 Fetch detail product dari API dummyjson
+// 🟢 Optional: fetch detail dari API kalau user buka langsung lewat URL
 export const fetchProductDetail = createAsyncThunk(
     "detail/fetchProductDetail",
     async (id: number) => {
         const res = await fetch(`https://dummyjson.com/products/${id}`);
         if (!res.ok) throw new Error("Failed to fetch detail");
-        return await res.json();
+        return (await res.json()) as DetailProduct;
     }
 );
 
@@ -42,6 +41,10 @@ const detailSlice = createSlice({
             state.item = null;
             state.error = null;
             state.isLoading = false;
+        },
+        // 🟢 Tambahin ini biar bisa dispatch(setDetail(product))
+        setDetail: (state, action) => {
+            state.item = action.payload;
         },
     },
     extraReducers: (builder) => {
@@ -61,5 +64,5 @@ const detailSlice = createSlice({
     },
 });
 
-export const { clearDetail } = detailSlice.actions;
+export const { clearDetail, setDetail } = detailSlice.actions; // ✅ ini penting
 export default detailSlice.reducer;
