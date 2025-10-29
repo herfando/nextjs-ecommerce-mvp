@@ -98,7 +98,7 @@ if (isLoading || !products) {
             {currentProduct.description}
           </span>
 
-          <Link href="#products">
+          <Link href="/06_detail">
             <Button 
               className="cursor-pointer rounded-sm text-center text-sm md:text-xl bg-[#0A0D12] w-[93px] h-[28px] md:w-[180px] md:h-[48px] text-white transition-all duration-500 ease-in-out hover:scale-105 hover:shadow-lg"
               aria-label="Get Now"

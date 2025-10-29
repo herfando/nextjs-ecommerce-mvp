@@ -1,51 +1,95 @@
-// src/app/detail/page.tsx
+'use client';
+
+import { useEffect } from "react";
 import Image from "next/image";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/redux/store";
+import { fetchProductDetail, clearDetail } from "@/redux/detailSlice";
+import { useSearchParams } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export default function Detail() {
+  const dispatch = useDispatch<AppDispatch>();
+  const searchParams = useSearchParams();
+  const id = Number(searchParams.get("id"));
+
+  const { item, isLoading, error } = useSelector(
+    (state: RootState) => state.detail
+  );
+
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchProductDetail(id));
+    }
+
+    // cleanup ketika keluar halaman
+    return () => {
+      dispatch(clearDetail());
+    };
+  }, [dispatch, id]);
+
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-[80vh]">
+        <Loader2 className="animate-spin w-8 h-8 text-gray-600" />
+      </div>
+    );
+
+  if (error)
+    return (
+      <div className="flex justify-center items-center h-[80vh] text-red-500">
+        {error}
+      </div>
+    );
+
+  if (!item)
+    return (
+      <div className="flex justify-center items-center h-[80vh] text-gray-500">
+        No product detail available
+      </div>
+    );
+
   return (
     <main className="font-display bg-white">
-      {/* Main */}
       <div className="max-w-7xl mx-auto bg-white p-6">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-6">
           Home <span className="mx-2">›</span> Detail <span className="mx-2">›</span>
-          <span className="text-black">Sneakers Court Minimalis</span>
+          <span className="text-black">{item.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left: Images */}
           <div>
             <Image
-              src="/product1.png"
-              alt="Sneakers utama"
+              src={item.thumbnail}
+              alt={item.title}
               width={500}
               height={400}
               className="w-full rounded-lg border border-gray-300 aspect-[4/3] object-cover"
             />
             <div className="flex justify-between gap-1 mt-4">
-              {["product1.png", "Thumbnail Image-1.png", "Thumbnail Image-2.png", "Thumbnail Image-1.png", "Thumbnail Image-3.png"].map(
-                (img, i) => (
-                  <Image
-                    key={i}
-                    src={`/${img}`}
-                    alt={`thumb ${i + 1}`}
-                    width={80}
-                    height={80}
-                    className="w-20 h-20 border border-gray-300 rounded cursor-pointer p-1 object-cover"
-                  />
-                )
-              )}
+              {item.images?.slice(0, 5).map((img, i) => (
+                <Image
+                  key={i}
+                  src={img}
+                  alt={`thumb ${i + 1}`}
+                  width={80}
+                  height={80}
+                  className="w-20 h-20 border border-gray-300 rounded cursor-pointer p-1 object-cover"
+                />
+              ))}
             </div>
           </div>
 
           {/* Right: Detail */}
           <div className="col-span-2">
-            <h1 className="text-2xl font-semibold">Sneakers Court Minimalis</h1>
-            <p className="text-2xl font-bold mt-2">Rp275.000</p>
+            <h1 className="text-2xl font-semibold">{item.title}</h1>
+            <p className="text-2xl font-bold mt-2">Rp{item.price.toLocaleString()}</p>
 
             <div className="flex items-center gap-2 mt-1">
               <span className="text-yellow-500">★</span>
-              <span className="font-medium">4.9</span>
+              <span className="font-medium">{item.rating}</span>
             </div>
 
             {/* Tabs */}
@@ -58,20 +102,10 @@ export default function Detail() {
 
             {/* Deskripsi */}
             <div className="mt-4 text-gray-700 leading-relaxed space-y-4">
-              <p className="text-sm">
-                <span className="font-medium">Sneakers Court Minimalis – Ivory Beige</span>
-                <br />
-                Sepatu sneakers bergaya minimalis dengan kombinasi warna ivory dan beige yang elegan.
-                Terbuat dari material kulit sintetis berkualitas dengan sentuhan suede halus di bagian panel samping dan depan.
-              </p>
-
+              <p className="text-sm">{item.description}</p>
               <ul className="text-sm list-disc pl-5 space-y-2">
-                <li><span className="font-medium">Desain:</span> Low-top dengan siluet klasik yang timeless</li>
-                <li><span className="font-medium">Material:</span> Kulit sintetis premium + suede sintetis</li>
-                <li><span className="font-medium">Sol:</span> Outsole karet anti-slip dengan warna natural gum untuk daya cengkeram yang baik</li>
-                <li><span className="font-medium">Kenyamanan:</span> Insole empuk dengan bantalan ekstra untuk pemakaian sehari-hari</li>
-                <li><span className="font-medium">Warna:</span> Ivory Beige</li>
-                <li><span className="font-medium">Gaya:</span> Cocok untuk casual look, street style, maupun semi-formal</li>
+                <li><span className="font-medium">Kategori:</span> {item.category}</li>
+                <li><span className="font-medium">Rating:</span> {item.rating}</li>
               </ul>
             </div>
 
@@ -80,7 +114,7 @@ export default function Detail() {
               <p className="text-sm text-gray-500 mb-2">Quantity</p>
               <div className="inline-flex items-center border rounded-lg">
                 <button className="px-3 py-2 select-none">−</button>
-                <span className="px-4 py-2 border-x">2</span>
+                <span className="px-4 py-2 border-x">1</span>
                 <button className="px-3 py-2 select-none">+</button>
               </div>
 
@@ -101,50 +135,20 @@ export default function Detail() {
         <h2 className="text-2xl font-semibold mb-6">Related Product</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-          {[
-            {
-              img: "product5.png",
-              title: "Overshirt Utility",
-              price: "Rp375.000",
-              rating: "4.5",
-            },
-            {
-              img: "sweater_rajut.png",
-              title: "Sweater Rajut Cable",
-              price: "Rp1.300.000",
-              rating: "4.8",
-            },
-            {
-              img: "syal_wolkotak.png",
-              title: "Syal Wol Kotak",
-              price: "Rp220.000",
-              rating: "4.9",
-            },
-            {
-              img: "syal_wolsolid.png",
-              title: "Syal Wol Solid",
-              price: "Rp180.000",
-              rating: "4.7",
-            },
-          ].map((p, i) => (
+          {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-white rounded-lg shadow p-4">
-              <Image
-                src={`/${p.img}`}
-                alt={p.title}
-                width={300}
-                height={240}
-                className="w-full h-60 object-cover rounded-md mb-4"
-              />
-              <h3 className="text-sm font-medium mb-1">{p.title}</h3>
-              <p className="font-semibold text-sm text-gray-800 mb-1">{p.price}</p>
+              <div className="w-full h-60 bg-gray-100 flex items-center justify-center rounded-md mb-4">
+                <span className="text-gray-400 text-sm">Related {i + 1}</span>
+              </div>
+              <h3 className="text-sm font-medium mb-1">Product {i + 1}</h3>
+              <p className="font-semibold text-sm text-gray-800 mb-1">Rp250.000</p>
               <div className="flex items-center text-sm text-yellow-500">
-                <span className="mr-1">⭐</span> {p.rating}
+                <span className="mr-1">⭐</span> 4.{i + 3}
               </div>
             </div>
           ))}
         </div>
       </div>
-
     </main>
   );
 }

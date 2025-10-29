@@ -7,9 +7,12 @@ import { Button } from "@/components/ui/button";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
 import { fetchProducts } from "@/redux/productSlice";
+import { useRouter } from "next/navigation";
+import { setDetail } from "@/redux/detailSlice"; // ⬅️ tambahkan
 
 export default function FeaturedProduct() {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
@@ -23,7 +26,6 @@ export default function FeaturedProduct() {
     }
   }, [dispatch, products.length]);
 
-  // 🟢 FIX: pencarian + urutan abjad case-insensitive agar stabil
   useEffect(() => {
     if (!products.length) return;
 
@@ -35,7 +37,6 @@ export default function FeaturedProduct() {
       );
     }
 
-    // urutkan A–Z tanpa peduli huruf besar/kecil
     updated.sort((a, b) =>
       a.title.toLowerCase().localeCompare(b.title.toLowerCase())
     );
@@ -62,7 +63,10 @@ export default function FeaturedProduct() {
         className="my-5 grid grid-cols-2 md:grid-cols-4 gap-6 md:p-0 max-w-7xl mx-auto animate-fadeIn"
       >
         {displayed.slice(0, visibleCount).map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} onClick={() => {
+            dispatch(setDetail(product)); // simpan ke redux
+            router.push("/06_detail"); // pindah ke halaman detail
+          }} />
         ))}
       </div>
 
@@ -80,8 +84,11 @@ export default function FeaturedProduct() {
   );
 }
 
-const ProductCard: React.FC<{ product: any }> = ({ product }) => (
-  <div className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer">
+const ProductCard: React.FC<{ product: any; onClick: () => void }> = ({ product, onClick }) => (
+  <div
+    onClick={onClick}
+    className="flex flex-col gap-2 p-3 bg-white rounded-xl border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+  >
     <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden bg-gray-100">
       <Image
         src={product.img}

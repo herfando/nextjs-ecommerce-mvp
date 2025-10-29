@@ -5,9 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
 import { fetchProducts } from "@/redux/productSlice";
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { setDetail } from "@/redux/detailSlice"; // ⬅️ tambahkan
 
 export default function Catalog() {
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
@@ -17,7 +20,6 @@ export default function Catalog() {
     }
   }, [dispatch, products.length]);
 
-  // 🟢 FIX: pencarian + urutan abjad A–Z tanpa peduli huruf besar
   const filteredProducts = [...products]
     .filter((p) =>
       p.title.toLowerCase().includes(query.toLowerCase())
@@ -59,7 +61,14 @@ export default function Catalog() {
         <section className="col-span-3 space-y-6">
           <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
             {filteredProducts.map((product) => (
-              <article key={product.id} className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition">
+              <article
+                key={product.id}
+                onClick={() => {
+                  dispatch(setDetail(product)); // simpan produk
+                  router.push("/06_detail"); // pergi ke halaman detail
+                }}
+                className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition"
+              >
                 <div className="relative w-full h-72">
                   <Image
                     src={product.img}
