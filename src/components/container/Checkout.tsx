@@ -1,11 +1,16 @@
 "use client";
-
 import Image from "next/image";
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 const Checkout = () => {
+  const cart = useSelector((state: RootState) => state.cart.items);
   const [paymentMethod, setPaymentMethod] = useState("bni1");
+  const [shippingCost, setShippingCost] = useState(10); // USD
+  const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const grandTotal = totalPrice + shippingCost;
 
   return (
     <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 font-display">
@@ -17,11 +22,11 @@ const Checkout = () => {
           <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
             <h2 className="text-xl font-semibold mb-4">Shipping Address</h2>
             <form className="grid grid-cols-1 gap-4">
-              <input type="text" placeholder="Name" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
-              <input type="text" placeholder="Phone Number" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
-              <input type="text" placeholder="City" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
-              <input type="text" placeholder="Postal Code" className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
-              <textarea placeholder="Address" rows={4} className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+              <input type="text" placeholder="Name" className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+              <input type="text" placeholder="Phone Number" className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+              <input type="text" placeholder="City" className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+              <input type="text" placeholder="Postal Code" className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500" />
+              <textarea placeholder="Address" rows={4} className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500"></textarea>
             </form>
           </div>
 
@@ -29,30 +34,33 @@ const Checkout = () => {
           <section>
             <h2 className="text-xl font-semibold mb-4">Shipping Method</h2>
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-              <select className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500">
-                <option>Select Shipping</option>
-                <option>Standard (Rp10.000)</option>
-                <option>Express (Rp25.000)</option>
+              <select 
+                className="w-full px-4 py-2 border rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+                onChange={(e) => setShippingCost(Number(e.target.value))}
+              >
+                <option value={10}>Standard (10 USD)</option>
+                <option value={25}>Express (25 USD)</option>
               </select>
             </div>
           </section>
 
-          {/* Product */}
+          {/* Products */}
           <section>
-            <h2 className="text-xl font-semibold mb-4">Product</h2>
-            <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <Image src="/product15.png" alt="Kaos Katun Premium" width={80} height={80} className="rounded-md" />
-                  <div>
-                    <h3 className="font-semibold">Kaos Katun Premium</h3>
-                    <p className="text-gray-500 text-sm">T-Shirt</p>
+            <h2 className="text-xl font-semibold mb-4">Products</h2>
+            <div className="space-y-4">
+              {cart.map(item => (
+                <div key={item.id} className="flex items-center justify-between bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                  <div className="flex items-center gap-4">
+                    <Image src={item.thumbnail || item.image || "/product1.png"} width={80} height={80} alt={item.title || item.name} className="rounded-md" />
+                    <div>
+                      <h3 className="font-semibold">{item.title || item.name}</h3>
+                      <p className="text-gray-500 text-sm">{item.category}</p>
+                      <p className="text-gray-500 text-sm">Qty: {item.quantity}</p>
+                    </div>
                   </div>
+                  <div className="text-right font-bold">${(item.price * item.quantity).toFixed(2)}</div>
                 </div>
-                <div className="text-right">
-                  <p className="font-semibold">1 X Rp1.100.000</p>
-                </div>
-              </div>
+              ))}
             </div>
           </section>
         </div>
@@ -103,23 +111,23 @@ const Checkout = () => {
               <h2 className="text-xl font-semibold">Payment Summary</h2>
               <div className="flex justify-between text-gray-600">
                 <span>Total Price of Goods</span>
-                <span>Rp1.100.000</span>
+                <span>${totalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping cost</span>
-                <span>Rp10.000</span>
+                <span>${shippingCost.toFixed(2)}</span>
               </div>
               <div className="flex justify-between font-bold text-lg mt-4 border-t border-gray-200 pt-4">
                 <span>Total</span>
-                <span>Rp1.110.000</span>
+                <span>${grandTotal.toFixed(2)}</span>
               </div>
             </div>
 
-            <Link href="/11_result_checkout"> 
-            <button className="cursor-pointer w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-md hover:bg-gray-800 transition-colors">
-              Pay Now
-            </button>
-            </Link> 
+            <Link href="/11_result_checkout">
+              <button className="cursor-pointer w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-md hover:bg-gray-800 transition-colors">
+                Pay Now
+              </button>
+            </Link>
           </div>
         </aside>
       </div>
