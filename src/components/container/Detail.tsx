@@ -1,31 +1,24 @@
-'use client';
+"use client";
 
 import { useEffect } from "react";
 import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
-import { fetchProductDetail, clearDetail } from "@/redux/detailSlice";
-import { useSearchParams } from "next/navigation";
+import { fetchProductDetail } from "@/redux/detailSlice";
 import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function Detail() {
   const dispatch = useDispatch<AppDispatch>();
+  const { item, isLoading, error } = useSelector((state: RootState) => state.detail);
   const searchParams = useSearchParams();
-  const id = Number(searchParams.get("id"));
-
-  const { item, isLoading, error } = useSelector(
-    (state: RootState) => state.detail
-  );
+  const idParam = searchParams.get("id");
+  const id = idParam ? Number(idParam) : null;
 
   useEffect(() => {
-    if (id) {
+    if (id !== null) {
       dispatch(fetchProductDetail(id));
     }
-
-    // cleanup ketika keluar halaman
-    return () => {
-      dispatch(clearDetail());
-    };
   }, [dispatch, id]);
 
   if (isLoading)
@@ -42,70 +35,87 @@ export default function Detail() {
       </div>
     );
 
-  if (!item)
-    return (
-      <div className="flex justify-center items-center h-[80vh] text-gray-500">
-        No product detail available
-      </div>
-    );
+  const data = item || {
+    // fallback default data kalau item belum ada
+    title: "Sneakers Court Minimalis",
+    price: 275000,
+    rating: 4.9,
+    description: "Sepatu sneakers bergaya minimalis dengan kombinasi warna ivory dan beige yang elegan.",
+    category: "Sneakers",
+    thumbnail: "/product1.png",
+    images: [
+      "/product1.png",
+      "/Thumbnail Image-1.png",
+      "/Thumbnail Image-2.png",
+      "/Thumbnail Image-1.png",
+      "/Thumbnail Image-3.png",
+    ],
+  };
 
   return (
     <main className="font-display bg-white">
+      {/* Main */}
       <div className="max-w-7xl mx-auto bg-white p-6">
         {/* Breadcrumb */}
         <nav className="text-sm text-gray-500 mb-6">
           Home <span className="mx-2">›</span> Detail <span className="mx-2">›</span>
-          <span className="text-black">{item.title}</span>
+          <span className="text-black">{data.title}</span>
         </nav>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left: Images */}
           <div>
-            <Image
-              src={item.thumbnail}
-              alt={item.title}
-              width={500}
-              height={400}
-              className="w-full rounded-lg border border-gray-300 aspect-[4/3] object-cover"
-            />
+            {data.thumbnail ? (
+              <Image
+                src={data.thumbnail}
+                alt={data.title}
+                width={500}
+                height={400}
+                className="w-full rounded-lg border border-gray-300 aspect-[4/3] object-cover"
+              />
+            ) : (
+              <div className="w-full h-[400px] bg-gray-100 flex items-center justify-center rounded-lg border border-gray-300">
+                <span className="text-gray-400 text-sm">No Image</span>
+              </div>
+            )}
             <div className="flex justify-between gap-1 mt-4">
-              {item.images?.slice(0, 5).map((img, i) => (
-                <Image
-                  key={i}
-                  src={img}
-                  alt={`thumb ${i + 1}`}
-                  width={80}
-                  height={80}
-                  className="w-20 h-20 border border-gray-300 rounded cursor-pointer p-1 object-cover"
-                />
-              ))}
+              {data.images?.length
+                ? data.images.slice(0, 5).map((img, i) => (
+                    <Image
+                      key={i}
+                      src={img}
+                      alt={`thumb ${i + 1}`}
+                      width={80}
+                      height={80}
+                      className="w-20 h-20 border border-gray-300 rounded cursor-pointer p-1 object-cover"
+                    />
+                  ))
+                : <div className="flex justify-center w-full text-gray-400 text-sm mt-2">No thumbnails</div>}
             </div>
           </div>
 
           {/* Right: Detail */}
           <div className="col-span-2">
-            <h1 className="text-2xl font-semibold">{item.title}</h1>
-            <p className="text-2xl font-bold mt-2">Rp{item.price.toLocaleString()}</p>
+            <h1 className="text-2xl font-semibold">{data.title}</h1>
+            <p className="text-2xl font-bold mt-2">Rp{data.price.toLocaleString()}</p>
 
             <div className="flex items-center gap-2 mt-1">
               <span className="text-yellow-500">★</span>
-              <span className="font-medium">{item.rating}</span>
+              <span className="font-medium">{data.rating}</span>
             </div>
 
             {/* Tabs */}
             <div className="flex gap-6 border-b mt-6">
-              <button className="font-semibold border-b-2 border-black pb-2">
-                Deskripsi
-              </button>
+              <button className="font-semibold border-b-2 border-black pb-2">Deskripsi</button>
               <button className="text-gray-500 pb-2">Spesifikasi</button>
             </div>
 
             {/* Deskripsi */}
             <div className="mt-4 text-gray-700 leading-relaxed space-y-4">
-              <p className="text-sm">{item.description}</p>
+              <p className="text-sm">{data.description}</p>
               <ul className="text-sm list-disc pl-5 space-y-2">
-                <li><span className="font-medium">Kategori:</span> {item.category}</li>
-                <li><span className="font-medium">Rating:</span> {item.rating}</li>
+                <li><span className="font-medium">Kategori:</span> {data.category}</li>
+                <li><span className="font-medium">Rating:</span> {data.rating}</li>
               </ul>
             </div>
 
@@ -133,7 +143,6 @@ export default function Detail() {
       {/* Related Product */}
       <div className="max-w-7xl mx-auto px-6 py-10">
         <h2 className="text-2xl font-semibold mb-6">Related Product</h2>
-
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
           {[...Array(4)].map((_, i) => (
             <div key={i} className="bg-white rounded-lg shadow p-4">
