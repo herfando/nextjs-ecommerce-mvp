@@ -65,7 +65,7 @@ export default function Catalog() {
                 key={product.id}
                 onClick={() => {
                   dispatch(setDetail(product)); // simpan produk
-                  router.push("/06_detail"); // pergi ke halaman detail
+                  router.push(`/06_detail?id=${product.id}`); // pergi ke halaman detail
                 }}
                 className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition"
               >

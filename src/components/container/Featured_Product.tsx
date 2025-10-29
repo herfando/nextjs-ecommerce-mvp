@@ -65,7 +65,7 @@ export default function FeaturedProduct() {
         {displayed.slice(0, visibleCount).map((product) => (
           <ProductCard key={product.id} product={product} onClick={() => {
             dispatch(setDetail(product)); // simpan ke redux
-            router.push("/06_detail"); // pindah ke halaman detail
+            router.push(`/06_detail?id=${product.id}`); // pindah ke halaman detail
           }} />
         ))}
       </div>
