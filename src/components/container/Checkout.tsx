@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import Link from "next/link";
 
 const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("bni1");
@@ -114,9 +115,11 @@ const Checkout = () => {
               </div>
             </div>
 
-            <button className="w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-md hover:bg-gray-800 transition-colors">
+            <Link href="/11_result_checkout"> 
+            <button className="cursor-pointer w-full bg-gray-900 text-white font-bold py-3 px-4 rounded-md hover:bg-gray-800 transition-colors">
               Pay Now
             </button>
+            </Link> 
           </div>
         </aside>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 const SuccessCheckout: React.FC = () => {
   return (
@@ -37,12 +38,14 @@ const SuccessCheckout: React.FC = () => {
 
         {/* Tombol Aksi */}
         <div>
+          <Link href="/18_order_listseller">
           <button
             type="button"
-            className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out"
+            className="cursor-pointer group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out"
           >
             Go to My Orders
           </button>
+          </Link>
         </div>
       </div>
     </div>
