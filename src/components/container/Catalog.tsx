@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "@/redux/store";
 import { fetchProducts } from "@/redux/productSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { setDetail } from "@/redux/detailSlice"; // ⬅️ tambahkan
+import { setDetail } from "@/redux/detailSlice";
 
 export default function Catalog() {
   const dispatch = useDispatch<AppDispatch>();
@@ -14,19 +14,39 @@ export default function Catalog() {
   const { items: products, isLoading } = useSelector((state: RootState) => state.products);
   const query = useSelector((state: RootState) => state.search.query);
 
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]); // ⬅️ untuk filter
+
   useEffect(() => {
     if (!products.length) {
       dispatch(fetchProducts());
     }
   }, [dispatch, products.length]);
 
-  const filteredProducts = [...products]
-    .filter((p) =>
+  // Ambil semua kategori unik dari products
+  const categories = Array.from(new Set(products.map(p => p.category)));
+  categories.unshift("All"); // supaya ada pilihan All
+
+  // Handle checkbox
+  const handleCategoryChange = (cat: string, checked: boolean) => {
+    if (cat === "All") {
+      setSelectedCategories([]);
+    } else {
+      if (checked) {
+        setSelectedCategories(prev => [...prev, cat]);
+      } else {
+        setSelectedCategories(prev => prev.filter(c => c !== cat));
+      }
+    }
+  };
+
+  const filteredProducts = products
+    .filter(p =>
       p.title.toLowerCase().includes(query.toLowerCase())
     )
-    .sort((a, b) =>
-      a.title.toLowerCase().localeCompare(b.title.toLowerCase())
-    );
+    .filter(p =>
+      selectedCategories.length === 0 || selectedCategories.includes(p.category)
+    )
+    .sort((a, b) => a.title.toLowerCase().localeCompare(b.title.toLowerCase()));
 
   if (isLoading || !products.length) {
     return (
@@ -46,10 +66,15 @@ export default function Catalog() {
             <h2 className="font-bold text-lg">FILTER</h2>
             <h3 className="font-semibold text-md">Categories</h3>
             <ul className="mt-3 space-y-2">
-              {["All", "Shoes", "Clothes", "Accessories"].map((cat, i) => (
+              {categories.map((cat, i) => (
                 <li key={i}>
                   <label className="flex items-center gap-2">
-                    <input type="checkbox" className="accent-black w-5 h-5 rounded" />
+                    <input
+                      type="checkbox"
+                      className="accent-black w-5 h-5 rounded"
+                      checked={selectedCategories.includes(cat) || (cat === "All" && selectedCategories.length === 0)}
+                      onChange={(e) => handleCategoryChange(cat, e.target.checked)}
+                    />
                     {cat}
                   </label>
                 </li>
@@ -64,8 +89,8 @@ export default function Catalog() {
               <article
                 key={product.id}
                 onClick={() => {
-                  dispatch(setDetail(product)); // simpan produk
-                  router.push(`/06_detail?id=${product.id}`); // pergi ke halaman detail
+                  dispatch(setDetail(product));
+                  router.push(`/06_detail?id=${product.id}`);
                 }}
                 className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md transition"
               >
