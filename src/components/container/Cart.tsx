@@ -2,7 +2,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { increase, decrease, removeItem } from "@/redux/cartSlice";
-
+import Link from "next/link";
 export default function Cart() {
   const cart = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
@@ -57,9 +57,11 @@ export default function Cart() {
             <span className="text-gray-700">Total</span>
             <span className="font-bold text-xl text-gray-600">${totalPrice.toFixed(2)}</span>
           </div>
+          <Link href="/10_checkout">
           <button className="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-gray-800 transition duration-300">
             Checkout
           </button>
+          </Link>
         </aside>
       </div>
     </main>

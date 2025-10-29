@@ -19,7 +19,7 @@ const initialState: CartState = {
     status: "idle",
 };
 
-
+// Fetch contoh data dari API
 export const fetchCartFromAPI = createAsyncThunk("cart/fetchCart", async () => {
     const res = await fetch("https://dummyjson.com/products?limit=5");
     const data = await res.json();
@@ -37,6 +37,14 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
+        addToCart: (state, action: PayloadAction<CartItem>) => {
+            const existingItem = state.items.find(i => i.id === action.payload.id);
+            if (existingItem) {
+                existingItem.quantity += action.payload.quantity;
+            } else {
+                state.items.push({ ...action.payload });
+            }
+        },
         increase: (state, action: PayloadAction<number>) => {
             const item = state.items.find(i => i.id === action.payload);
             if (item) item.quantity += 1;
@@ -64,5 +72,5 @@ const cartSlice = createSlice({
     },
 });
 
-export const { increase, decrease, removeItem } = cartSlice.actions;
+export const { addToCart, increase, decrease, removeItem } = cartSlice.actions;
 export default cartSlice.reducer;
