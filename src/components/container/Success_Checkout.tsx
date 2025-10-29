@@ -38,7 +38,7 @@ const SuccessCheckout: React.FC = () => {
 
         {/* Tombol Aksi */}
         <div>
-          <Link href="/18_order_listseller">
+          <Link href="/12_order_list">
           <button
             type="button"
             className="cursor-pointer group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition duration-150 ease-in-out"
