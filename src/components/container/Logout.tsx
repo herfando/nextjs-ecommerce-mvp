@@ -1,40 +1,37 @@
-import React from 'react';
+import React from "react";
 
 interface LogoutModalProps {
   /** Menentukan apakah modal terlihat atau tidak */
-  isOpen: boolean;
+  isOpen?: boolean; // jadikan opsional
   /** Fungsi yang dipanggil saat tombol 'Cancel' ditekan atau modal ditutup */
-  onCancel: () => void;
+  onCancel?: () => void; // opsional
   /** Fungsi yang dipanggil saat tombol 'Logout' ditekan */
-  onLogout: () => void;
+  onLogout?: () => void; // opsional
 }
 
-const Logout: React.FC<LogoutModalProps> = ({ isOpen, onCancel, onLogout }) => {
+const Logout: React.FC<LogoutModalProps> = ({
+  isOpen = true, // default tampil
+  onCancel = () => {}, // default fungsi kosong
+  onLogout = () => {}, // default fungsi kosong
+}) => {
   if (!isOpen) {
     return null;
   }
 
   return (
     // Backdrop (Layer gelap di belakang modal)
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40" onClick={onCancel}>
-      
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
+      onClick={onCancel}
+    >
       {/* Kontainer Modal */}
-      <div 
+      <div
         className="bg-white rounded-lg shadow-xl w-full max-w-sm p-6 transform transition-all duration-300 scale-100 opacity-100"
         onClick={(e) => e.stopPropagation()} // Mencegah klik di dalam modal menutupnya
       >
-        
         {/* Header Modal */}
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-semibold text-gray-900">Logout</h3>
-          {/* Tombol Tutup (X) jika diperlukan, meskipun desain Anda tidak menunjukkannya */}
-          {/* <button 
-            onClick={onCancel}
-            className="text-gray-400 hover:text-gray-600"
-          >
-            <span className="sr-only">Close modal</span>
-            &times; 
-          </button> */}
         </div>
 
         {/* Konten Modal */}

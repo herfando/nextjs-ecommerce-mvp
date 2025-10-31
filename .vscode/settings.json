@@ -1,3 +1,45 @@
 {
+  // 🔧 Formatter & Auto Format
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit",
+    "source.addMissingImports": "explicit"
+  },
+
+  // 💅 Prettier settings
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.jsxSingleQuote": true,
+  "prettier.trailingComma": "es5",
+  "prettier.arrowParens": "always",
+
+  // 📘 Language-specific formatters
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // ⚙️ TypeScript SDK path
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // 🧹 Exclude unnecessary folders/files
+  "files.exclude": {
+    "**/node_modules": true,
+    "next-env.d.ts": true,
+    "**/.vscode": true
+  },
+
+  // 🎨 CSS lint fix
   "css.lint.unknownAtRules": "ignore"
 }
